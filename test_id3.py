@@ -1,6 +1,6 @@
 #!/usr/bin/env python
 #
-# filename: test_gain.py
+# filename: test_id3.py
 # authors:  Jon David and Jarett Decker
 # date:     Thursday, February 4, 2016
 #
@@ -18,14 +18,8 @@ print "training set: ", trainfilename
 
 mydefs = ShroomDefs(deffilename)
 mydb = ShroomDatabase(trainfilename)
-        
-gain_table = calc_all_gain(mydb, mydefs)
-print "\nGain table:"
-print "==========================="
-for attr in gain_table:
-    gain = gain_table[attr]
-    print attr, ": ", gain
 
-rmend_attr, gain = recommend_next_attr(gain_table)
-print "\nRecommend: ", rmend_attr, ", ", gain
+## TODO... sleepy now ~.~
+##root_node = ID3Node(mydb, mydefs)
+
 

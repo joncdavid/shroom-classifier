@@ -21,9 +21,17 @@ class ShroomRecord:
 class ShroomDatabase:
     """Definition of mushroom database"""
 
-    def __init__(self, filename):
-        self.records = []
-        self.load_data(filename)
+    def __init__(self, filename, records=[]):
+        self.records = records
+        if len(self.records) == 0:
+            self.load_data(filename)
+
+    def clone(self):
+        """Creates a deep copy of this instance."""
+        new_record = []
+        for r in self.records:
+            new_record.append(r)
+        return ShroomDatabase("", new_record)
 
     def load_data(self, filename):
         """Populates mushroom database from filename."""
@@ -56,7 +64,7 @@ class ShroomDatabase:
                 r.add_attr('habitat',t[22])
                 self.records.append(r)
                 
-    def validate_data(self, deffilename=ShroomDefs.DEFAULT_DEF_FILENAME):
+    def validate_data(self, deffilename):
         """
         Validates class and attribute names and attribute values.
         Returns the number invalid attributes and symbols.
@@ -76,6 +84,7 @@ class ShroomDatabase:
         return num_invalid
 
     def fetch_class_vector(self):
+        """Fetches a vector of class/label values."""
         v = []
         for r in self.records:
             v.append(r.label)
