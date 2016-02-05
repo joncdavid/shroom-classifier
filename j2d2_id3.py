@@ -11,11 +11,13 @@ from j2d2_database import ShroomDatabase
 
 
 class ID3Node:
-    def __init__(self, db, defs):
+    def __init__(self, db, defs, gain=0, depth=0):
         self.isleaf = False
         self.leafvalue = None
         self.db = db
         self.defs = defs
+        self.gain = gain
+        self.depth = depth
         self.children = set()
         self.initialize()
 
@@ -25,8 +27,8 @@ class ID3Node:
             self.leafvalue = mode(self.db)[0]
             return
         gain_table = calc_all_gain(self.db, self.defs)
-        recmd_attr = recommend_next_attr(gain_table)
-        self.split(recmd_attr)
+        recmd_attr, gain = recommend_next_attr(gain_table)
+        self.split(recmd_attr, gain)
         
     def is_homogeneous(self, db):
         """Checks if, at this node, all class/labels are homogeneous."""
@@ -35,7 +37,7 @@ class ID3Node:
             unique_labels.add(r)
         return len(unique_labels) == 1
     
-    def split(self, attr):
+    def split(self, attr, gain):
         """Partitions the dataset about this attribute."""
         #TODO edge case: handling ?-missing values.
         for valid_value in self.defs.attr_values[attr]:
@@ -45,7 +47,8 @@ class ID3Node:
                 if r.attr_values[attr] == valid_value:
                     subset_db.append(r)
             sub_db = ShroomDatabase(subset_records)
-            self.children.add(sub_db, defs)
+            child_node = ID3Node(sub_db, defs, gain, self.depth+1)
+            self.children.add(child_node)
 
 # End of class ID3Node
 #--------------------------------------------------------------------
@@ -65,32 +68,27 @@ def mode(db, attr=None):
             mode.append(x)
     return mode
     
-def calc_disttable(vector):
+def calc_distribution_table(vector):
     """Calculates distribution table for some vector."""
-    disttable = {}
+    dist_table = {}
     for x in vector:
-        if x not in disttable:
-            disttable[x] = 0
-        disttable[x] += 1
-    return disttable
+        if x not in dist_table:
+            dist_table[x] = 0
+        dist_table[x] += 1
+    return dist_table
     
 def recommend_next_attr(gain_table):
     """Recommends the attribute with the highest gain as
     the next decision node."""
-    recommended_attr = None
-    highest_gain = 0.0
-    for attr in gain_table:
-        gain = gain_table[attr]
-        if gain > highest_gain:
-            highest_gain = gain
-            recommended_attr = attr
-    return recommended_attr, highest_gain
+    highest_gain = max(gain_table.values())
+    f_maxtuple = lambda x,y: x if(x[1] >= y[1]) else y
+    (attr,gain) = reduce(f_maxtuple, gain_table.items())
+    return attr, gain
     
 def calc_all_gain(db, defs):
     """Calculates the information gain for all attributes."""
-    gain_table = {}
-    for a in defs.attr_set:
-        gain_table[a] = calc_gain(a, db, defs)
+    f = lambda a: (a, calc_gain(a, db, defs))
+    gain_table = dict( map(f, defs.attr_set) )
     return gain_table
         
 def calc_gain(attr, db, defs):
@@ -113,12 +111,9 @@ def calc_gain(attr, db, defs):
 
 def calc_entropy(vector):
     """Calculates entropy for some vector."""
-    num_elements = len(vector)
-    disttable = calc_disttable(vector)
-    acc_entropy = 0.0000
-    for x in disttable:
-        p = 1.0*disttable[x]/num_elements
-        entropy = -1.0*p*math.log(p,2)
-        acc_entropy += entropy
-    return acc_entropy
+    n = len(vector)
+    dist_table = calc_distribution_table(vector)
+    f_pentropy = lambda x: (-1.0*x[1]/n)*math.log((1.0*x[1]/n),2)
+    entropy = sum( map(f_pentropy, dist_table.items()) )
+    return entropy
         
