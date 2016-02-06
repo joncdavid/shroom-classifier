@@ -11,28 +11,34 @@ from j2d2_database import ShroomDatabase
 
 class ID3Tree:
     LEAF_STR="{}is-leaf:{}, leaf-value:{}, depth:{}"
-    DECISION_STR="{}attr:{}, gain:{}, depth:{}"
+    DECISION_STR="{}attr:{}={}, gain:{}, depth:{}"
     
     def __init__(self, root):
         self.root = root
-        self.set_depth(0, self.root.children)
+        set_depth(root, 0)
 
     def print_tree(self):
+        """Recursively prints this tree."""
         self._print_tree(self.root)
         
     def _print_tree(self, root):
-        """Recursively prints this tree."""
+        """Recursively prints the tree represented by root."""
         if not root:
             return
         
         offset = "\t"*root.depth
         if root.isleaf:
-            print ID3Tree.LEAF_STR.format(offset, root.isleaf,
-                                          root.leafvalue, root.depth)
+            print ID3Tree.LEAF_STR.format(offset,
+                                          root.isleaf,
+                                          root.label,
+                                          root.depth)
             return
-        print ID3Tree.DECISION_STR.format(offset, root.attr,
-                                          root.gain, root.depth)
-        print "num childrens: ", len(root.children)
+        print ID3Tree.DECISION_STR.format(offset,
+                                          root.parent_attr,
+                                          root.parent_attr_val,
+                                          root.gain,
+                                          root.depth)
+#        print "num childrens: ", len(root.children)
         for child in root.children:
             self._print_tree(child)
 
@@ -45,52 +51,54 @@ def set_depth(node, depth):
         set_depth(child, depth+1)
     
 def id3(db, target_attr, attributes, defs):
-    print "\n========"
-#    print "Start id3. target_attr:{}, attr:{}".format(target_attr,
-#                                                      attributes)
+#   print "\n========"
     root = ID3Node()
     v = db.fetch_class_vector()
     is_homogeneous, label = root.is_homogeneous(v)
     if(is_homogeneous):
         root.label = label
         root.isleaf = True
-        print "homogeneous. mode:{}".format(label)
+#        print "homogeneous. mode:{}".format(label)
         return root
     if len(attributes) == 0:
         root.label = mode2(examples, target_attr)[0]
         root.isleaf = True
-        print "empty attributes. mode:{}".format(root.label)
+#        print "empty attributes. mode:{}".format(root.label)
         return root
 
     gain_table = calc_all_gain(db, defs)
     A, gain = recommend_next_attr(gain_table)
-    print "Recommended A:{}, gain:{}.".format(A,gain)
+#    print "Recommended A:{}, gain:{}.".format(A,gain)
     
-    root.decision_attr=A
+    root.decision_attr = A
     for v in defs.attr_values[A]:
-        print "A:{} == ai:{}".format(A,v)
+#        print "A:{} == ai:{}".format(A,v)
         node = ID3Node()
         node.parent_attr = A
         node.parent_attr_val = v
+        node.gain = gain
         root.children.append(node)
         subset_records = []
         for x in db.records:
             if x.attributes[A] == v:
                 subset_records.append(x)
 
-        print "|S|={}, |Sv|={}.".format(len(db.records),len(subset_records))
+#        print "|S|={}, |Sv|={}.".format(len(db.records),
+#                                        len(subset_records))
         if len(subset_records) == 0:
             leafnode = ID3Node()
-            leafnode.isleaf=True
+            leafnode.isleaf = True
             leafnode.label = mode2(db.records, 'class')[0]
-            print "leafnode. label:{}".format(leafnode.label)
+#            print "leafnode. label:{}".format(leafnode.label)
             root.add_child(node)
         else:
             subattributes = filter(lambda x: x != A, attributes)
-            print "|A|={}, |A-a|={}.".format(len(attributes), len(subattributes))
+#            print "|A|={}, |A-a|={}.".format(len(attributes),
+#                                             len(subattributes))
             subset_db = ShroomDatabase(subset_records)
             subtree = id3(subset_db, target_attr, attributes, defs)
             root.add_child(subtree)
+    return root
             
 
 class ID3Node:
@@ -100,6 +108,7 @@ class ID3Node:
         self.decision_attr = None
         self.parent_attr = None
         self.parent_attr_val = None
+        self.gain = 0.0
         self.depth = depth
         self.children = []
 
@@ -114,6 +123,8 @@ class ID3Node:
         if len(unique_labels) == 1:
             return True, list(unique_labels)[0]
         return False, None
+
+    
     
 
 # End of class ID3Node

@@ -22,5 +22,7 @@ mydb = ShroomDatabase([], trainfilename)
 
 root = id3(mydb, 'class', mydefs.attr_set, mydefs)
 print root.label
+
+tree = ID3Tree(root)
 set_depth(root, 0)
-root.print_tree()
+tree.print_tree()
