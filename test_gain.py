@@ -17,7 +17,7 @@ print "definition file: ", deffilename
 print "training set: ", trainfilename
 
 mydefs = ShroomDefs(deffilename)
-mydb = ShroomDatabase(trainfilename)
+mydb = ShroomDatabase([], trainfilename)
         
 gain_table = calc_all_gain(mydb, mydefs)
 print "\nGain table:"

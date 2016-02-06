@@ -11,15 +11,16 @@ from j2d2_id3 import *
 
 deffilename = "_shroom.data.definition"
 trainfilename = "./data/training.dat"
+#trainfilename = "./data/training.10.dat"
 
 print "\n"
 print "definition file: ", deffilename
 print "training set: ", trainfilename
 
 mydefs = ShroomDefs(deffilename)
-mydb = ShroomDatabase(trainfilename)
+mydb = ShroomDatabase([], trainfilename)
 
-## TODO... sleepy now ~.~
-##root_node = ID3Node(mydb, mydefs)
-
-
+root = id3(mydb, 'class', mydefs.attr_set, mydefs)
+print root.label
+set_depth(root, 0)
+root.print_tree()

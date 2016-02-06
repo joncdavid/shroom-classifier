@@ -20,49 +20,49 @@ class ShroomRecord:
 
 class ShroomDatabase:
     """Definition of mushroom database"""
-
-    def __init__(self, filename, records=[]):
-        self.records = records
-        if len(self.records) == 0:
+    def __init__(self, records, filename=None):
+        self.records=records
+        if filename and len(self.records) == 0:
             self.load_data(filename)
+        print "|DB|={}.".format(len(self.records))
 
-    def clone(self):
-        """Creates a deep copy of this instance."""
-        new_record = []
-        for r in self.records:
-            new_record.append(r)
-        return ShroomDatabase("", new_record)
+
+    def load(self, x):
+        """Loads a 22-tuple into record. Adds record to records."""
+        record = ShroomRecord(x[0])
+        record.add_attr('cap-shape', x[1])
+        record.add_attr('cap-surface', x[2])
+        record.add_attr('cap-color', x[3])
+        record.add_attr('bruises', x[4])
+        record.add_attr('odor', x[5])
+        record.add_attr('gill-attachment', x[6])
+        record.add_attr('gill-spacing', x[7])
+        record.add_attr('gill-size', x[8])
+        record.add_attr('gill-color', x[9])
+        record.add_attr('stalk-shape', x[10])
+        record.add_attr('stalk-root', x[11])
+        record.add_attr('stalk-surface-above-ring', x[12])
+        record.add_attr('stalk-surface-below-ring', x[13])
+        record.add_attr('stalk-color-above-ring', x[14])
+        record.add_attr('stalk-color-below-ring', x[15])
+        record.add_attr('veil-type', x[16])
+        record.add_attr('veil-color', x[17])
+        record.add_attr('ring-number', x[18])
+        record.add_attr('ring-type', x[19])
+        record.add_attr('spore-print-color', x[20])
+        record.add_attr('population', x[21])
+        record.add_attr('habitat', x[22])
+        self.records.append(record)
+
+#        for r in self.records:
+#            print r.label, r.attributes
 
     def load_data(self, filename):
         """Populates mushroom database from filename."""
         with open(filename, 'r') as f:
             for line in f:
                 t = line.strip().split(',')
-                classname = t[0]
-                r = ShroomRecord(classname)
-                r.add_attr('cap-shape',t[1])
-                r.add_attr('cap-surface',t[2])
-                r.add_attr('cap-color',t[3])
-                r.add_attr('bruises',t[4])
-                r.add_attr('odor',t[5])
-                r.add_attr('gill-attachment',t[6])
-                r.add_attr('gill-spacing',t[7])
-                r.add_attr('gill-size',t[8])
-                r.add_attr('gill-color',t[9])
-                r.add_attr('stalk-shape',t[10])
-                r.add_attr('stalk-root',t[11])
-                r.add_attr('stalk-surface-above-ring',t[12])
-                r.add_attr('stalk-surface-below-ring',t[13])
-                r.add_attr('stalk-color-above-ring',t[14])
-                r.add_attr('stalk-color-below-ring',t[15])
-                r.add_attr('veil-type',t[16])
-                r.add_attr('veil-color',t[17])
-                r.add_attr('ring-number',t[18])
-                r.add_attr('ring-type',t[19])
-                r.add_attr('spore-print-color',t[20])
-                r.add_attr('population',t[21])
-                r.add_attr('habitat',t[22])
-                self.records.append(r)
+                self.load(t)
                 
     def validate_data(self, deffilename):
         """
