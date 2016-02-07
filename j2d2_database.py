@@ -24,7 +24,7 @@ class ShroomDatabase:
         self.records=records
         if filename and len(self.records) == 0:
             self.load_data(filename)
-        print "|DB|={}.".format(len(self.records))
+#        print "|DB|={}.".format(len(self.records))
 
 
     def load(self, x):

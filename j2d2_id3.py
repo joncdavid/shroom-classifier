@@ -9,101 +9,83 @@ import math
 from j2d2_datadef import ShroomDefs
 from j2d2_database import ShroomDatabase
 
+import pdb
+
 class ID3Tree:
     LEAF_STR="{}is-leaf:{}, leaf-value:{}, depth:{}"
     DECISION_STR="{}attr:{}={}, gain:{}, depth:{}"
     
     def __init__(self, root):
         self.root = root
-        set_depth(root, 0)
+        self.root.set_depth(0)
 
     def print_tree(self):
         """Recursively prints this tree."""
-        self._print_tree(self.root)
+        print_tree(self.root)
         
-    def _print_tree(self, root):
-        """Recursively prints the tree represented by root."""
-        if not root:
-            return
-        
-        offset = "\t"*root.depth
-        if root.isleaf:
-            print ID3Tree.LEAF_STR.format(offset,
-                                          root.isleaf,
-                                          root.label,
-                                          root.depth)
-            return
-        print ID3Tree.DECISION_STR.format(offset,
-                                          root.parent_attr,
-                                          root.parent_attr_val,
-                                          root.gain,
-                                          root.depth)
-#        print "num childrens: ", len(root.children)
-        for child in root.children:
-            self._print_tree(child)
+def print_tree(root):
+    """Recursively prints the tree represented by root."""
+    root.print_node()
+    for child in root.children:
+        child.print_node()
 
-def set_depth(node, depth):
-    if not node:
-        return
-    
-    node.depth = depth
-    for child in node.children:
-        set_depth(child, depth+1)
     
 def id3(db, target_attr, attributes, defs):
-#   print "\n========"
+    #   print "\n======== ID3 ========================="
+#    pdb.set_trace()
     root = ID3Node()
     v = db.fetch_class_vector()
     is_homogeneous, label = root.is_homogeneous(v)
     if(is_homogeneous):
         root.label = label
-        root.isleaf = True
-#        print "homogeneous. mode:{}".format(label)
+        root.node_type = 'leaf'
+        #print "homogeneous. mode:{}".format(label)
         return root
     if len(attributes) == 0:
         root.label = mode2(examples, target_attr)[0]
-        root.isleaf = True
-#        print "empty attributes. mode:{}".format(root.label)
+        root.node_type = 'leaf'
+        #print "empty attributes. mode:{}".format(root.label)
         return root
 
-    gain_table = calc_all_gain(db, defs)
+    gain_table = calc_all_gain(attributes, db, defs)
     A, gain = recommend_next_attr(gain_table)
-#    print "Recommended A:{}, gain:{}.".format(A,gain)
+    #print "Recommended A:{}, gain:{}.".format(A,gain)
     
     root.decision_attr = A
+    root.label = A
+    root.gain = gain
     for v in defs.attr_values[A]:
-#        print "A:{} == ai:{}".format(A,v)
+        #print "A:{} == ai:{}".format(A,v)
         node = ID3Node()
+        node.node_type = 'edge'
         node.parent_attr = A
         node.parent_attr_val = v
         node.gain = gain
-        root.children.append(node)
         subset_records = []
         for x in db.records:
-            if x.attributes[A] == v:
+            if ((x.attributes[A] == v) and
+                (x.attributes[A] != '?')):
                 subset_records.append(x)
 
-#        print "|S|={}, |Sv|={}.".format(len(db.records),
-#                                        len(subset_records))
+        #print "|S|={}, |Sv|={}.".format(len(db.records),
+        #                                len(subset_records))
         if len(subset_records) == 0:
-            leafnode = ID3Node()
-            leafnode.isleaf = True
-            leafnode.label = mode2(db.records, 'class')[0]
-#            print "leafnode. label:{}".format(leafnode.label)
-            root.add_child(node)
+            leaf_node = ID3Node()
+            leaf_node.node_type = 'leaf'
+            leaf_node.label = mode2(db.records, 'class')[0]
+            node.add_child(leaf_node)
         else:
-            subattributes = filter(lambda x: x != A, attributes)
-#            print "|A|={}, |A-a|={}.".format(len(attributes),
-#                                             len(subattributes))
+            subattributes = attributes - set([A])
             subset_db = ShroomDatabase(subset_records)
-            subtree = id3(subset_db, target_attr, attributes, defs)
-            root.add_child(subtree)
+            subtree = id3(subset_db, target_attr, subattributes, defs)
+            node.add_child(subtree)
+        root.add_child(node)
     return root
             
 
 class ID3Node:
     def __init__(self, depth=0):
-        self.isleaf = False
+        self.node_type = 'node'
         self.label = None
         self.decision_attr = None
         self.parent_attr = None
@@ -114,6 +96,12 @@ class ID3Node:
 
     def add_child(self, node):
         self.children.append(node)
+        node.set_depth(self.depth+1)
+
+    def set_depth(self, depth):
+        self.depth = depth
+        for child in self.children:
+            child.set_depth(depth+1)
         
     def is_homogeneous(self, vector):
         """Checks if, at this node, all class/labels are homogeneous."""
@@ -124,7 +112,40 @@ class ID3Node:
             return True, list(unique_labels)[0]
         return False, None
 
-    
+    NODE_STR = "{}(decision-node (split (attr {}) (gain {}) (depth {})))"
+    EDGE_STR = "{}(edge (= {} ({} {})))"
+    LEAF_STR = "{}(leaf-node (classify ({} {})) (depth {}))"
+    def print_node(self, defs, recursive=False):
+        str = None
+        #pdb.set_trace()
+        offset = "\t" * self.depth
+        if self.node_type == 'node':
+            str = ID3Node.NODE_STR.format(offset,
+                                          self.decision_attr,
+                                          self.gain,
+                                          self.depth)
+        elif self.node_type == 'edge':
+            pretty_attr_val = defs.get_pretty_string(self.parent_attr,
+                                                     self.parent_attr_val)
+            str = ID3Node.EDGE_STR.format(offset,
+                                          self.parent_attr,
+                                          self.parent_attr_val,
+                                          pretty_attr_val)
+        elif self.node_type == 'leaf':
+            pretty_label = defs.get_pretty_string('class',
+                                                  self.label)
+            str = ID3Node.LEAF_STR.format(offset,
+                                          self.label,
+                                          pretty_label,
+                                          self.depth)
+        else:
+            str = "WARNING: invalid node type: ", self.node_type
+        print str
+
+        if recursive:
+            for child in self.children:
+                child.print_node(defs, recursive)
+            
     
 
 # End of class ID3Node
@@ -167,10 +188,11 @@ def recommend_next_attr(gain_table):
     (attr,gain) = reduce(f_maxtuple, gain_table.items())
     return attr, gain
     
-def calc_all_gain(db, defs):
+def calc_all_gain(attributes, db, defs):
     """Calculates the information gain for all attributes."""
     f = lambda a: (a, calc_gain(a, db, defs))
-    gain_table = dict( map(f, defs.attr_set) )
+    gain_table = dict( map(f, attributes) )
+    #gain_table = dict( map(f, defs.attr_set) )
     return gain_table
         
 def calc_gain(attr, db, defs):
