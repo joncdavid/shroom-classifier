@@ -21,6 +21,7 @@ class ShroomDefs:
     
     def __init__(self, filename=DEFAULT_DEF_FILENAME):
         self.class_set = set()
+        self.class_values = dict()
         self.attr_set = set()
         self.attr_values = dict()
         self.load_definition(filename)
@@ -35,6 +36,8 @@ class ShroomDefs:
         Returns the printer-friendly string representation of
         a symbol, for some attribute.
         """
+        if attr=='class':
+            return self.class_values[symbol]
         return self.attr_values[attr][symbol]
 
     def load_definition(self, filename):
@@ -55,6 +58,7 @@ class ShroomDefs:
                     for pair in pairs.split(','):
                         symbol,text = pair.strip().split(':')
                         self.class_set.add(symbol)
+                        self.class_values.update({symbol:text})
                 elif ttype == 'attribute':
                     self.attr_set.add(name)
                     for pair in pairs.split(','):

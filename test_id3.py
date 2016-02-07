@@ -9,6 +9,9 @@ from j2d2_datadef import ShroomDefs
 from j2d2_database import ShroomDatabase
 from j2d2_id3 import *
 
+import pdb
+
+
 deffilename = "_shroom.data.definition"
 trainfilename = "./data/training.dat"
 #trainfilename = "./data/training.10.dat"
@@ -20,9 +23,10 @@ print "training set: ", trainfilename
 mydefs = ShroomDefs(deffilename)
 mydb = ShroomDatabase([], trainfilename)
 
+#pdb.set_trace()
 root = id3(mydb, 'class', mydefs.attr_set, mydefs)
-print root.label
 
-tree = ID3Tree(root)
-set_depth(root, 0)
-tree.print_tree()
+#tree = ID3Tree(root)
+#pdb.set_trace()
+root.print_node(mydefs, True)
+#tree.print_tree()
