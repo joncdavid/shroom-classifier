@@ -1,12 +1,12 @@
 #!/usr/bin/env python
 #
-# filename: j2d2_database.py
+# filename: database.py
 # authors:  Jon David and Jarett Decker
 # date:     Wednesday, February 3, 2016
 #
 
 import re
-from j2d2_datadef import ShroomDefs
+from datadef import ShroomDefs
 
 class ShroomRecord:
     """Definition of a mushroom record"""
