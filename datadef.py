@@ -1,6 +1,6 @@
 #!/usr/bin/env python
 #
-# filename: j2d2_datadef.py
+# filename: datadef.py
 # authors:  Jon David and Jarett Decker
 # date:     Wednesday, February 3, 2016
 #
