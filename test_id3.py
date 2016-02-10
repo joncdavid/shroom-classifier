@@ -5,9 +5,9 @@
 # date:     Thursday, February 4, 2016
 #
 
-from j2d2_datadef import ShroomDefs
-from j2d2_database import ShroomDatabase
-from j2d2_id3 import *
+from datadef import ShroomDefs
+from database import ShroomDatabase
+from id3 import *
 
 import pdb
 
