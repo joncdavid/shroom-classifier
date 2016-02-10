@@ -1,13 +1,13 @@
 #!/usr/bin/env python
 #
-# filename: j2d2_id3.py
+# filename: id3.py
 # authors:  Jon David and Jarett Decker
 # date:     Wednesday, February 3, 2016
 #
 
 import math
-from j2d2_datadef import ShroomDefs
-from j2d2_database import ShroomDatabase
+from datadef import ShroomDefs
+from database import ShroomDatabase
 
 import pdb
 
