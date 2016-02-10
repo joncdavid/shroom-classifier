@@ -112,9 +112,9 @@ class ID3Node:
             return True, list(unique_labels)[0]
         return False, None
 
-    NODE_STR = "{}'(decision-node (attr {}) (gain {}) (depth {}))"
-    EDGE_STR = "{}'(edge ({} ({} {})))"
-    LEAF_STR = "{}'(leaf-node (class ({} {})) (depth {}))"
+    NODE_STR = "{}(decision-node (split (attr {}) (gain {}) (depth {})))"
+    EDGE_STR = "{}(edge (= {} ({} {})))"
+    LEAF_STR = "{}(leaf-node (classify ({} {})) (depth {}))"
     def print_node(self, defs, recursive=False):
         str = None
         #pdb.set_trace()
