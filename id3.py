@@ -236,3 +236,38 @@ def calc_entropy(vector):
     entropy = sum(partial_entropy)
     return entropy
         
+def calc_all_class_error(attributes, db, defs):
+    """Calculates the classification error for all attributes of a ShroomDatabase."""
+    tot_len = len(db.fetch_class_vector())
+    class_error_table = dict()
+    class_error_before = calc_class_error(db.fetch_class_vector())
+    for attr in attributes:
+        interim_db_list = []
+        for symbol in defs.attr_values[attr]:
+            interim_list = []
+            for r in db.records:
+                if r.attributes[attr] == symbol:
+                    interim_list.append(r)
+            interim_db_list.append(ShroomDatabase(interim_list))
+        interim_class_error = 0
+        for idb in interim_db_list:
+            vec = idb.fetch_class_vector()
+            interim_class_error += (len(vec) / tot_len * calc_class_error(vec))
+        class_error_after = class_error_before - interim_class_error
+        class_error_table[attr] = class_error_after
+    return class_error_table
+
+def calc_class_error(vector):
+    """Calculates the classification error for some vector."""
+    n = len(vector)
+    if n == 0:
+        return 1
+    table = dict()
+    for v in vector:
+        if (v in table.keys()) == False:
+            table[v] = 0
+        table[v] += 1
+    for k in table.keys():
+        table[k] /= n
+    error = 1 - max(table.values())
+    return error
