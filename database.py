@@ -18,7 +18,7 @@ class ShroomRecord:
         self.attributes[attr] = symbol
 
     def pretty_print(self):
-        print self.label, self.attributes
+        print(self.label, self.attributes)
 
     def get_raw_string(self):
         """Returns a string representations of this record
