@@ -19,7 +19,35 @@ class ShroomRecord:
 
     def pretty_print(self):
         print self.label, self.attributes
-        
+
+    def get_raw_string(self):
+        """Returns a string representations of this record
+        equivalent to the format it was read."""
+        s = [self.label,
+             self.attributes['cap-shape'],
+             self.attributes['cap-surface'],
+             self.attributes['cap-color'],
+             self.attributes['bruises'],
+             self.attributes['odor'],
+             self.attributes['gill-attachment'],
+             self.attributes['gill-spacing'],
+             self.attributes['gill-size'],
+             self.attributes['gill-color'],
+             self.attributes['stalk-shape'],
+             self.attributes['stalk-root'],
+             self.attributes['stalk-surface-above-ring'],
+             self.attributes['stalk-surface-below-ring'],
+             self.attributes['stalk-color-above-ring'],
+             self.attributes['stalk-color-below-ring'],
+             self.attributes['veil-type'],
+             self.attributes['veil-color'],
+             self.attributes['ring-number'],
+             self.attributes['ring-type'],
+             self.attributes['spore-print-color'],
+             self.attributes['population'],
+             self.attributes['habitat']]
+        return str.join(',', s)
+                      
 
 class ShroomDatabase:
     """Definition of mushroom database"""
@@ -27,8 +55,7 @@ class ShroomDatabase:
         self.records=records
         if filename and len(self.records) == 0:
             self.load_data(filename)
-#        print "|DB|={}.".format(len(self.records))
-
+        #print "|DB|={}.".format(len(self.records))
 
     def load(self, x):
         """Loads a 22-tuple into record. Adds record to records."""
@@ -66,7 +93,13 @@ class ShroomDatabase:
             for line in f:
                 t = line.strip().split(',')
                 self.load(t)
-                
+
+    def save_data(self, savefilename):
+        """Saves this database into savefilename."""
+        with open(savefilename, 'w') as f:
+            for record in self.records:
+                f.write(record.get_raw_string() + "\n")
+            
     def validate_data(self, deffilename):
         """
         Validates class and attribute names and attribute values.

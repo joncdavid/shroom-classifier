@@ -5,19 +5,18 @@
 # date:     Thursday, February 10, 2016
 #
 
+import pdb
+
 from datadef import ShroomDefs
 from database import ShroomDatabase
 from id3_v2 import *
 
-import pdb
-
 
 deffilename = "_shroom.data.definition"
 trainfilename = "./data/training.dat"
-#trainfilename = "./data/training.10.dat"
 testfilename = "./data/testing.dat"
 
-print("\n")
+print("\n\n==== Test id3_v2 ====")
 print("definition file: ", deffilename)
 print("training set: ", trainfilename)
 
@@ -35,6 +34,6 @@ testdb = ShroomDatabase([], testfilename)
 record = testdb.records[0]
 classification = tree.classify(record)
 
-print("record: ", record.pretty_print())
-print("classification: ", classification)
+print("record to classify: " + record.get_raw_string())
+print("classification: " + classification)
 
