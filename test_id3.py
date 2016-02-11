@@ -16,9 +16,9 @@ deffilename = "_shroom.data.definition"
 trainfilename = "./data/training.dat"
 #trainfilename = "./data/training.10.dat"
 
-print "\n"
-print "definition file: ", deffilename
-print "training set: ", trainfilename
+print("\n")
+print("definition file: ", deffilename)
+print("training set: ", trainfilename)
 
 mydefs = ShroomDefs(deffilename)
 mydb = ShroomDatabase([], trainfilename)

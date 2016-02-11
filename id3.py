@@ -140,7 +140,7 @@ class ID3Node:
                                           self.depth/2)
         else:
             str = "WARNING: invalid node type: ", self.node_type
-        print str
+        print(str)
 
         if recursive:
             for child in self.children:
@@ -183,16 +183,28 @@ def calc_distribution_table(vector):
 def recommend_next_attr(gain_table):
     """Recommends the attribute with the highest gain as
     the next decision node."""
+    #highest_gain = max(gain_table.values())
+    #f_maxtuple = lambda x,y: x if(x[1] >= y[1]) else y
+    #(attr,gain) = reduce(f_maxtuple, gain_table.items())
+    #return attr, gain
+
     highest_gain = max(gain_table.values())
-    f_maxtuple = lambda x,y: x if(x[1] >= y[1]) else y
-    (attr,gain) = reduce(f_maxtuple, gain_table.items())
-    return attr, gain
+    best_attr = None
+    highest_gain = 0.0
+    for attr in gain_table:
+        gain = gain_table[attr]
+        if(gain > highest_gain):
+            best_attr, highest_gain = attr, gain
+    return best_attr, highest_gain
+            
     
 def calc_all_gain(attributes, db, defs):
     """Calculates the information gain for all attributes."""
-    f = lambda a: (a, calc_gain(a, db, defs))
-    gain_table = dict( map(f, attributes) )
-    #gain_table = dict( map(f, defs.attr_set) )
+    #f = lambda a: (a, calc_gain(a, db, defs))
+    #gain_table = dict( map(f, attributes) )
+    gain_table = dict()
+    for a in attributes:
+        gain_table.update({a : calc_gain(a, db, defs)})
     return gain_table
         
 def calc_gain(attr, db, defs):
@@ -217,7 +229,10 @@ def calc_entropy(vector):
     """Calculates entropy for some vector."""
     n = len(vector)
     dist_table = calc_distribution_table(vector)
-    f_pentropy = lambda x: (-1.0*x[1]/n)*math.log((1.0*x[1]/n),2)
-    entropy = sum( map(f_pentropy, dist_table.items()) )
+    partial_entropy = []
+    for item in dist_table.items():
+        p = 1.0*item[1]/n  #proportion
+        partial_entropy.append((-1*p) * math.log((1.0*p), 2))
+    entropy = sum(partial_entropy)
     return entropy
         

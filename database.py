@@ -79,7 +79,7 @@ class ShroomDatabase:
                     num_invalid = num_invalid + 1
                 symbol = r.attributes[attr_name]
                 if symbol not in definitions.attr_values[attr_name]:
-                    print "Invalid symbol ", symbol, " for ", attr_name
+                    print("Invalid symbol ", symbol, " for ", attr_name)
                     num_invalid = num_invalid + 1
         return num_invalid
 

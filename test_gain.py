@@ -12,20 +12,20 @@ from id3 import *
 deffilename = "_shroom.data.definition"
 trainfilename = "./data/training.dat"
 
-print "\n"
-print "definition file: ", deffilename
-print "training set: ", trainfilename
+print("\n")
+print("definition file: ", deffilename)
+print("training set: ", trainfilename)
 
 mydefs = ShroomDefs(deffilename)
 mydb = ShroomDatabase([], trainfilename)
         
-gain_table = calc_all_gain(mydb, mydefs)
-print "\nGain table:"
-print "==========================="
+gain_table = calc_all_gain(mydefs.attr_set, mydb, mydefs)
+print("\nGain table:")
+print("===========================")
 for attr in gain_table:
     gain = gain_table[attr]
-    print attr, ": ", gain
+    print(attr, ": ", gain)
 
 rmend_attr, gain = recommend_next_attr(gain_table)
-print "\nRecommend: ", rmend_attr, ", ", gain
+print("\nRecommend: ", rmend_attr, ", ", gain)
 
