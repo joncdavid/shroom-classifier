@@ -6,6 +6,7 @@
 #
 
 import pdb
+import abc
 import math
 
 from datadef import ShroomDefs
@@ -13,7 +14,7 @@ from database import ShroomDatabase
 from id3_tree import *
 
     
-def id3(db, target_attr, attributes, defs):
+def id3(criteria, db, target_attr, attributes, defs):
     v = db.fetch_class_vector()
     homogeneous, label = is_homogeneous(v)
     if(homogeneous):
@@ -22,10 +23,12 @@ def id3(db, target_attr, attributes, defs):
         label = mode2(examples, target_attr)[0]
         return ID3Tree( ID3LeafNode(label) )
 
-    gain_table = calc_all_gain(attributes, db, defs)
-    A, gain = recommend_next_attr(gain_table)
-    
-    decision_node = ID3DecisionNode(A, gain, 0.0)
+    A, stat = criteria.recommend_next_attr(attributes, db, defs)
+    decision_node = None
+    if isinstance(criteria, InformationGainCriteria):
+        decision_node = ID3DecisionNode(A, stat, 0.0)
+    else:
+        decision_node = ID3DecisionNode(A, 0.0, stat)
     tree = ID3Tree(decision_node)
     for v in defs.attr_values[A]:
         edge = ID3Edge(A, v)
@@ -42,11 +45,53 @@ def id3(db, target_attr, attributes, defs):
         else:
             subattributes = attributes - set([A])
             subset_db = ShroomDatabase(subset_records)
-            subtree = id3(subset_db, target_attr, subattributes, defs)
+            subtree = id3(criteria, subset_db, target_attr,
+                          subattributes, defs)
             tree.add_tree(decision_node, edge, subtree)
     return tree
-            
 
+
+class SelectionCriteria(object):
+    __metaclass__ = abc.ABCMeta
+
+    def __init__(self):
+        return
+
+    @abc.abstractmethod
+    def recommend_next_attr(self, attributes, db, defs):
+        """Returns the recommended attribute, and criteria."""
+        return
+
+class InformationGainCriteria(SelectionCriteria):
+    def __init__(self):
+        super(self.__class__, self).__init__()
+
+    def recommend_next_attr(self, attributes, db, defs):
+        """Recommends the attribute with the highest gain as
+        the next decision node."""
+        gain_table = calc_all_gain(attributes, db, defs)
+        highest_gain = max(gain_table.values())
+        best_attr = None
+        highest_gain = 0.0
+        for attr in gain_table:
+            gain = gain_table[attr]
+            if(gain > highest_gain):
+                best_attr, highest_gain = attr, gain
+        return best_attr, highest_gain
+        
+
+class ClassificationErrorCriteria(SelectionCriteria):
+    def __init__(self):
+        super(self.__class__, self).__init__()
+
+    def recommend_next_attr(self, attributes, db, defs):
+        """Recommends the attribute with the minimum
+        classification error as the next decision node."""
+        best_attr = None
+        min_classification_error = 0.0
+        return best_attr, min_classification_error
+
+        
 #---- Utility Functions ---------------------------------------------
 
 def is_homogeneous(vector):
@@ -86,19 +131,6 @@ def calc_distribution_table(vector):
             dist_table[x] = 0
         dist_table[x] += 1
     return dist_table
-    
-def recommend_next_attr(gain_table):
-    """Recommends the attribute with the highest gain as
-    the next decision node."""
-    highest_gain = max(gain_table.values())
-    best_attr = None
-    highest_gain = 0.0
-    for attr in gain_table:
-        gain = gain_table[attr]
-        if(gain > highest_gain):
-            best_attr, highest_gain = attr, gain
-    return best_attr, highest_gain
-            
     
 def calc_all_gain(attributes, db, defs):
     """Calculates the information gain for all attributes."""

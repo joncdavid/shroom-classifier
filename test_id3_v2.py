@@ -24,5 +24,6 @@ mydefs = ShroomDefs(deffilename)
 mydb = ShroomDatabase([], trainfilename)
 
 #pdb.set_trace()
-tree = id3(mydb, 'class', mydefs.attr_set, mydefs)
+gain_criteria = InformationGainCriteria()
+tree = id3(gain_criteria, mydb, 'class', mydefs.attr_set, mydefs)
 tree.print_entire_tree()
