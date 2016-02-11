@@ -1,6 +1,6 @@
 #!/usr/bin/env python
 #
-# filename: id3_v2.py
+# filename: id3.py
 # authors:  Jon David and Jarrett Decker
 # date:     Wednesday, February 10, 2016
 #
@@ -70,7 +70,6 @@ class InformationGainCriteria(SelectionCriteria):
         """Recommends the attribute with the highest gain as
         the next decision node."""
         gain_table = calc_all_gain(attributes, db, defs)
-        highest_gain = max(gain_table.values())
         best_attr = None
         highest_gain = 0.0
         for attr in gain_table:
@@ -87,9 +86,23 @@ class ClassificationErrorCriteria(SelectionCriteria):
     def recommend_next_attr(self, attributes, db, defs):
         """Recommends the attribute with the minimum
         classification error as the next decision node."""
+        misclass_table = calc_all_class_error(attributes, db, defs)        
         best_attr = None
-        min_classification_error = 0.0
-        return best_attr, min_classification_error
+        #min_classify_error = 1.0  #wait, are we minimizing
+        min_classify_error = 0.0   #or maximizing?  Right now it
+                                   #looks like maximizes works...
+                                   #but I think we're supposed to
+                                   #be minimizing. Maybe there's
+                                   #a logic inversion somewhere.
+        # gain and misclass produce different trees.
+        # is that expected?
+        for attr in misclass_table:
+            classify_error = misclass_table[attr]
+            #if(classify_error < min_classify_error):
+            if(classify_error > min_classify_error):    
+                best_attr = attr
+                min_classify_error = classify_error
+        return best_attr, min_classify_error
 
         
 #---- Utility Functions ---------------------------------------------
@@ -200,6 +213,6 @@ def calc_class_error(vector):
             table[v] = 0
         table[v] += 1
     for k in table.keys():
-        table[k] /= n
-    error = 1 - max(table.values())
+        table[k] /= (1.0)*n
+    error = 1.0 - max(table.values())
     return error

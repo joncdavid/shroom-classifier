@@ -1,7 +1,7 @@
 #!/usr/bin/env python
 #
 # filename: database.py
-# authors:  Jon David and Jarett Decker
+# authors:  Jon David and Jarrett Decker
 # date:     Wednesday, February 3, 2016
 #
 
@@ -55,7 +55,6 @@ class ShroomDatabase:
         self.records=records
         if filename and len(self.records) == 0:
             self.load_data(filename)
-        #print "|DB|={}.".format(len(self.records))
 
     def load(self, x):
         """Loads a 22-tuple into record. Adds record to records."""
@@ -83,9 +82,6 @@ class ShroomDatabase:
         record.add_attr('population', x[21])
         record.add_attr('habitat', x[22])
         self.records.append(record)
-
-#        for r in self.records:
-#            print r.label, r.attributes
 
     def load_data(self, filename):
         """Populates mushroom database from filename."""

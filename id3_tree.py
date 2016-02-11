@@ -1,6 +1,6 @@
 #!/usr/bin/env python
 #
-# filename: j2d2_id3.py
+# filename: id3_tree.py
 # authors:  Jon David and Jarett Decker
 # date:     Wednesday, February 10, 2016
 #

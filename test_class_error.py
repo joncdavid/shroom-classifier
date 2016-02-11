@@ -1,3 +1,5 @@
+#!/usr/bin/env python
+
 from id3 import *
 
 deffilename = "_shroom.data.definition"
@@ -8,8 +10,9 @@ mydb = ShroomDatabase([], trainfilename)
 
 error = calc_class_error(mydb.fetch_class_vector())
 
-class_error_table = calc_all_class_error(mydefs.attr_set,mydb, mydefs)
-print("\nGain table:")
+class_error_table = calc_all_class_error(mydefs.attr_set,
+                                         mydb, mydefs)
+print("\nMisclassification table:")
 print("===========================")
 for attr in class_error_table:
     error = class_error_table[attr]
