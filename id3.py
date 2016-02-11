@@ -117,7 +117,6 @@ class ID3Node:
     LEAF_STR = "{}(leaf-node (classify ({} {})) (depth {}))"
     def print_node(self, defs, recursive=False):
         str = None
-        #pdb.set_trace()
         offset = "\t" * self.depth
         if self.node_type == 'node':
             str = ID3Node.NODE_STR.format(offset,
@@ -183,11 +182,6 @@ def calc_distribution_table(vector):
 def recommend_next_attr(gain_table):
     """Recommends the attribute with the highest gain as
     the next decision node."""
-    #highest_gain = max(gain_table.values())
-    #f_maxtuple = lambda x,y: x if(x[1] >= y[1]) else y
-    #(attr,gain) = reduce(f_maxtuple, gain_table.items())
-    #return attr, gain
-
     highest_gain = max(gain_table.values())
     best_attr = None
     highest_gain = 0.0
@@ -200,8 +194,6 @@ def recommend_next_attr(gain_table):
     
 def calc_all_gain(attributes, db, defs):
     """Calculates the information gain for all attributes."""
-    #f = lambda a: (a, calc_gain(a, db, defs))
-    #gain_table = dict( map(f, attributes) )
     gain_table = dict()
     for a in attributes:
         gain_table.update({a : calc_gain(a, db, defs)})

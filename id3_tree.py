@@ -111,7 +111,7 @@ class ID3Tree:
         self.root = root
         self.Nodes = []  #a list of ID3Nodes
         self.Edges = []  #a list of ID3Edges
-        self.adjacency = dict()
+        self.adjacency = dict({self.root : []})
         self.Nodes.append(root)
         # adjacency a dictionary where:
         #   * it's key is an ID3Node and
