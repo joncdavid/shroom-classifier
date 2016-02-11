@@ -16,6 +16,9 @@ class ShroomRecord:
 
     def add_attr(self, attr, symbol):
         self.attributes[attr] = symbol
+
+    def pretty_print(self):
+        print self.label, self.attributes
         
 
 class ShroomDatabase:
@@ -96,3 +99,4 @@ class ShroomDatabase:
         for r in self.records:
             v.append(r.attributes[attr])
         return v
+        

@@ -15,6 +15,7 @@ import pdb
 deffilename = "_shroom.data.definition"
 trainfilename = "./data/training.dat"
 #trainfilename = "./data/training.10.dat"
+testfilename = "./data/testing.dat"
 
 print("\n")
 print("definition file: ", deffilename)
@@ -27,3 +28,13 @@ mydb = ShroomDatabase([], trainfilename)
 gain_criteria = InformationGainCriteria()
 tree = id3(gain_criteria, mydb, 'class', mydefs.attr_set, mydefs)
 tree.print_entire_tree()
+
+
+print("\n\n==== Test classification====")
+testdb = ShroomDatabase([], testfilename)
+record = testdb.records[0]
+classification = tree.classify(record)
+
+print("record: ", record.pretty_print())
+print("classification: ", classification)
+

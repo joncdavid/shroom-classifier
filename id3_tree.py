@@ -139,6 +139,25 @@ class ID3Tree:
         self.adjacency.update(new_tree.adjacency)
         self.update_all_depths()
 
+    def classify(self, shroom_record):
+        """Classifies this shroom_record."""
+        return self._classify(self.root, shroom_record)
+
+    def _classify(self, node, shroom_record):
+        """Classifies this shroom_record."""
+        if not node:
+            return None
+        if isinstance(node, ID3LeafNode):
+            return node.classification
+
+        next_node = None
+        for edge in self.adjacency[node]:
+            val = shroom_record.attributes[edge.branch_attribute]
+            if edge.branch_value == val:
+                next_node = edge.destination_node
+                break
+        return self._classify(next_node, shroom_record)
+
     def get_children(self, node):
         """Gets a list of node's children."""
         children = []
