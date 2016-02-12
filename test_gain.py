@@ -26,6 +26,6 @@ for attr in gain_table:
     gain = gain_table[attr]
     print(attr, ": ", gain)
 
-rmend_attr, gain = recommend_next_attr(gain_table)
-print("\nRecommend: ", rmend_attr, ", ", gain)
+# rmend_attr, gain = recommend_next_attr(gain_table)
+# print("\nRecommend: ", rmend_attr, ", ", gain)
 
