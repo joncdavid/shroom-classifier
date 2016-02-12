@@ -88,18 +88,10 @@ class ClassificationErrorCriteria(SelectionCriteria):
         classification error as the next decision node."""
         misclass_table = calc_all_class_error(attributes, db, defs)        
         best_attr = None
-        #min_classify_error = 1.0  #wait, are we minimizing
-        min_classify_error = 0.0   #or maximizing?  Right now it
-                                   #looks like maximizes works...
-                                   #but I think we're supposed to
-                                   #be minimizing. Maybe there's
-                                   #a logic inversion somewhere.
-        # gain and misclass produce different trees.
-        # is that expected?
+        min_classify_error = 100000.00
         for attr in misclass_table:
             classify_error = misclass_table[attr]
-            #if(classify_error < min_classify_error):
-            if(classify_error > min_classify_error):    
+            if(classify_error < min_classify_error):
                 best_attr = attr
                 min_classify_error = classify_error
         return best_attr, min_classify_error
@@ -180,6 +172,34 @@ def calc_entropy(vector):
         partial_entropy.append((-1*p) * math.log((1.0*p), 2))
     entropy = sum(partial_entropy)
     return entropy
+
+def calc2_all_class_error(attributes, db, defs):
+    misclass_table = dict()
+    for attr in attributes:
+        misclass_table.update({attr:calc2_class_error(attr, db, defs)})
+    return misclass_table
+
+def calc2_class_error(attribute, db, defs):
+    M = 0.0   # M is misclassification error for this attr.
+    n = len(db.fetch_class_vector())
+    for symbol in defs.attr_values[attribute]:
+        subset_records = []
+        for r in db.records:
+            if r.attributes[attribute] == symbol:
+                subset_records.append(r)
+        subset_db = ShroomDatabase(subset_records)
+        sub_vector = subset_db.fetch_class_vector()
+        dist_table = calc_distribution_table(sub_vector)
+        prob_p_ = 0.0
+        prob_e_ = 0.0
+        if 'p' in dist_table:
+            prob_p_ = float(dist_table['p']) / n
+        if 'e' in dist_table:
+            prob_e_ = float(dist_table['e']) / n
+        n_v = len(sub_vector)
+        M = M + (1.0 - max(prob_p_, prob_e_))*(float(n_v)/n)
+    return M
+        
         
 def calc_all_class_error(attributes, db, defs):
     """Calculates the classification error for all attributes of a ShroomDatabase."""
