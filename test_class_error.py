@@ -8,9 +8,6 @@ mydb = ShroomDatabase([], trainfilename)
 
 error = calc_class_error(mydb.fetch_class_vector())
 
-#print(error)
-
-
 class_error_table = calc_all_class_error(mydefs.attr_set,mydb, mydefs)
 print("\nGain table:")
 print("===========================")

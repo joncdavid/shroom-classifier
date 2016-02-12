@@ -1,7 +1,7 @@
 #!/usr/bin/env python
 #
 # filename: test_gain.py
-# authors:  Jon David and Jarett Decker
+# authors:  Jon David and Jarrett Decker
 # date:     Thursday, February 4, 2016
 #
 

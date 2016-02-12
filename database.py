@@ -1,7 +1,7 @@
 #!/usr/bin/env python
 #
 # filename: database.py
-# authors:  Jon David and Jarett Decker
+# authors:  Jon David and Jarrett Decker
 # date:     Wednesday, February 3, 2016
 #
 

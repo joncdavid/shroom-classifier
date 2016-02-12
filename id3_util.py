@@ -1,7 +1,7 @@
 #!/usr/bin/env python
 #
 # filename: id3_util.py
-# authors:  Jon David and Jarett Decker
+# authors:  Jon David and Jarrett Decker
 # date:     Wednesday, February 9, 2016
 #
 # description:

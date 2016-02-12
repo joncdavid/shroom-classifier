@@ -1,7 +1,7 @@
 #!/usr/bin/env python
 #
 # filename: j2d2_id3.py
-# authors:  Jon David and Jarett Decker
+# authors:  Jon David and Jarrett Decker
 # date:     Wednesday, February 10, 2016
 #
 
