@@ -219,7 +219,7 @@ def calc_all_chi_squared(attributes, defs, db):
         chi2_table.update({a : calc_chi_squared(a, defs,
                                                 predicted_db, actual_db)})
     return chi2_table
-    
+
 def calc_chi_squared(attr, defs, db):
     """Calculates Chi-squared value for this attribute."""
     v = db.fetch_class_vector()
@@ -250,3 +250,25 @@ def calc_chi_squared(attr, defs, db):
                        (math.pow((e_i - e_i_prime),2) / e_i_prime) )
         chi_squared += local_chi2
     return chi_squared
+
+
+class ChiSquareDistributionTable(object):
+    """A class that represents the Chi-Squared distribution table."""
+    def __init__(self, filename):
+        self.table = {}
+        self.load(filename)
+
+    def load(self, filename):
+        #pdb.set_trace()
+        with open(filename, 'r') as f:
+            for line in f:
+                dof, p50, p05, p01 = line.strip().split(",")
+                if dof not in self.table:
+                    self.table[dof] = {}
+                self.table[dof]["0.50"] = p50
+                self.table[dof]["0.05"] = p05
+                self.table[dof]["0.01"] = p01
+
+    def get_probability(self, dof, alpha):
+        dof_str = str(dof) if isinstance(dof,int) else dof
+        return self.table[dof_str][alpha]
