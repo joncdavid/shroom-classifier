@@ -1,6 +1,6 @@
 #!/usr/bin/env python
 #
-# filename: test_id3.py
+# filename: test_id3_evaluator.py
 # authors:  Jon David and Jarrett Decker
 # date:     Thursday, February 10, 2016
 #
@@ -18,18 +18,18 @@ trainfilename = "./data/training.dat"
 testfilename = "./data/testing.dat"
 
 # criteria_str can be 'gain' or 'misclassification'.
-def test_evaluator_with(criteria_str):
+def test_evaluator_with(criteria):
     print("\n\n==== Test ID3Evaluator functionality ====")
     print("definition file: ", deffilename)
     print("training set: ", trainfilename)
     print("test set: ", testfilename)
-    print("selection criteria: ", criteria_str)
+    print("selection criteria: ", str(criteria))
 
     mydefs = ShroomDefs(deffilename)
     mydb = ShroomDatabase([], trainfilename)
 
     evaluator = ID3ShroomEvaluator()
-    tree = evaluator.generate_id3_tree(criteria_str,
+    tree = evaluator.generate_id3_tree(criteria,
                                        deffilename, trainfilename)
 
     test_db = ShroomDatabase([],testfilename)
@@ -40,5 +40,5 @@ def test_evaluator_with(criteria_str):
     report.print_summary()
 
 #---- begin ----
-test_evaluator_with('gain')
-test_evaluator_with('misclassification')
+test_evaluator_with(InformationGainCriteria())
+test_evaluator_with(ClassificationErrorCriteria())

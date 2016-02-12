@@ -50,11 +50,13 @@ class ID3LeafNode(ID3Node):
 
 
 class ID3DecisionNode(ID3Node):
-    def __init__(self, decision_attr, gain, misclass_error, depth=0):
+    def __init__(self, decision_attr, gain, misclass_error,
+                 chi_squared=0.0, depth=0):
         super(self.__class__, self).__init__(depth)
         self.decision_attribute = decision_attr
         self.information_gain = gain
         self.misclassification_error = misclass_error
+        self.chi_squared = chi_squared
 
     def __eq__(self, other):
         me = (self.decision_attribute,
@@ -68,13 +70,14 @@ class ID3DecisionNode(ID3Node):
     def __ne__(self, other):
         return not self == other
 
-    NODE_STR = "{}(decision-node (split (attr {}) (gain {}) (misclassification {}) (depth {})))"
+    NODE_STR = "{}(decision-node (split (attr {}) (gain {}) (misclassification {}) (chi^2 {}) (depth {})))"
     def print_node(self):
         offset = "\t" * (self.depth*2)
         str = self.NODE_STR.format(offset,
                                    self.decision_attribute,
                                    self.information_gain,
                                    self.misclassification_error,
+                                   self.chi_squared,
                                    self.depth)
         print(str)
 
