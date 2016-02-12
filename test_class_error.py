@@ -33,3 +33,4 @@ for attr in class_error_table:
 
 #rmend_attr, value = recommend_next_attr(class_error_table)
 #print("\nRecommend: ", rmend_attr, ", ", value)
+

@@ -236,3 +236,4 @@ def calc_class_error(vector):
         table[k] /= (1.0)*n
     error = 1.0 - max(table.values())
     return error
+
