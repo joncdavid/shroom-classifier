@@ -78,12 +78,14 @@ class ID3ShroomEvaluator(object):
         return
     
     def generate_id3_tree(self, selection_criteria,
-                          datadef_filename, training_filename):
+                          datadef_filename, training_filename,
+                          chi_table, CI="0%"):
         """Generates an ID3 classification tree."""
         data_defs = ShroomDefs(datadef_filename)
         training_db = ShroomDatabase([], training_filename)
         classification_tree = id3(selection_criteria, training_db,
-                                  'class', data_defs.attr_set, data_defs)
+                                  'class', data_defs.attr_set,
+                                  data_defs, chi_table, CI)
         return classification_tree
         
     def generate_predicted_db(self, id3_tree, actual_db):

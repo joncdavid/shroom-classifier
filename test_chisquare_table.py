@@ -10,10 +10,10 @@ import pdb
 from id3 import ChiSquareDistributionTable
 
 
-def print_test(chi_table, dof, alpha):
-    test_str = "DoF:{}, alpha:{}, p:{}"
-    print(test_str.format(dof, alpha,
-                          chi_table.get_probability(dof, alpha)))
+def print_test(chi_table, dof, CI):
+    test_str = "DoF:{}, CI:{}, p:{}"
+    print(test_str.format(dof, CI,
+                          chi_table.get_score(dof, CI)))
 
 
 #---- begin ----
@@ -21,16 +21,16 @@ print("\n==== Testing ChiSquareDistributionTable ====")
 chitablefile = "./chi_square_table.txt"
 chi_table = ChiSquareDistributionTable(chitablefile)
 
-print_test(chi_table, 1, "0.50")
-print_test(chi_table, 2, "0.05")
-print_test(chi_table, 3, "0.01")
-print_test(chi_table, 4, "0.50")
-print_test(chi_table, 5, "0.05")
-print_test(chi_table, 6, "0.01")
-print_test(chi_table, 7, "0.50")
-print_test(chi_table, 8, "0.05")
-print_test(chi_table, 9, "0.01")
-print_test(chi_table, 10, "0.50")
-print_test(chi_table, 11, "0.05")
+print_test(chi_table, 1, "50%")
+print_test(chi_table, 2, "95%")
+print_test(chi_table, 3, "99%")
+print_test(chi_table, 4, "50%")
+print_test(chi_table, 5, "95%")
+print_test(chi_table, 6, "99%")
+print_test(chi_table, 7, "50%")
+print_test(chi_table, 8, "95%")
+print_test(chi_table, 9, "99%")
+print_test(chi_table, 10, "50%")
+print_test(chi_table, 11, "95%")
 
 

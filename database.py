@@ -95,6 +95,13 @@ class ShroomDatabase:
         with open(savefilename, 'w') as f:
             for record in self.records:
                 f.write(record.get_raw_string() + "\n")
+
+    def save_class_only(self, savefilename):
+        """Saves this database's class labels only into savefilename."""
+        with open(savefilename, 'w') as f:
+            for record in self.records:
+                f.write(record.label + "\n")
+        
             
     def validate_data(self, deffilename):
         """

@@ -179,9 +179,26 @@ class ID3Tree:
         for child in self.get_children(node):
             self.update_depth(child, depth+1)
 
+    def max_depth(self):
+        """Finds the max depth of this tree."""
+        max_depth = 0
+        for node in self.Nodes:
+            if isinstance(node, ID3LeafNode):
+                if node.depth > max_depth:
+                    max_depth = node.depth
+        return max_depth
+    
+    def print_summary(self):
+        """Prints tree summary."""
+        print("\n==== Tree summary ====")
+        print("|Nodes|: ", len(self.Nodes))
+        print("|Edges|: ", len(self.Edges))
+        print("Max depth: ", self.max_depth())
+        
     def print_entire_tree(self):
         """Prints entire tree in tab format."""
         self.print_tree_at(self.root)
+        self.print_summary()
         return
 
     def print_tree_at(self, node):

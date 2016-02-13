@@ -251,11 +251,24 @@ def calc_chi_squared(attr, defs, db):
         chi_squared += local_chi2
     return chi_squared
 
+def should_prune(chi2, attribute, CI, chi_table):
+    dof = len(attribute) - 1
+    x = chi_table.get_probability(dof, CI)
+    if not x:
+        return False
+    if chi2 >= x:
+        return True
+    return False
+            
 
 class ChiSquareDistributionTable(object):
     """A class that represents the Chi-Squared distribution table."""
     def __init__(self, filename):
         self.table = {}
+        self.ci_alpha_map = {"99%":"0.01",
+                             "95%":"0.05",
+                             "50%":"0.05",
+                             "0%" : None}
         self.load(filename)
 
     def load(self, filename):
@@ -269,6 +282,12 @@ class ChiSquareDistributionTable(object):
                 self.table[dof]["0.05"] = p05
                 self.table[dof]["0.01"] = p01
 
-    def get_probability(self, dof, alpha):
+    def get_score(self, dof, CI):
+        alpha = self.ci_alpha_map[CI]
+        if not alpha:
+            return None
+        return self._get_score(dof, alpha)
+    
+    def _get_score(self, dof, alpha):
         dof_str = str(dof) if isinstance(dof,int) else dof
         return self.table[dof_str][alpha]
