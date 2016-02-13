@@ -15,7 +15,8 @@ from id3 import *
 
 
 deffilename = "_shroom.data.definition"
-trainfilename = "./data/training.dat"
+trainfilename = "./data/training.dat"  
+#trainfilename = "./data/training.clean.dat"  #this lowers accuracy
 testfilename = "./data/testing.dat"
 validationfilename = "./data/validation.dat"
 chitable_filename = "./chi_square_table.txt"
@@ -62,12 +63,12 @@ else:
 print("Using validation file: ", expectedfile)
 
 test_experiment(InformationGainCriteria(), expectedfile, "99%")
-#test_experiment(InformationGainCriteria(), expectedfile, "95%")
-#test_experiment(InformationGainCriteria(), expectedfile, "50%")
-#test_experiment(InformationGainCriteria(), expectedfile, "0%")
+test_experiment(InformationGainCriteria(), expectedfile, "95%")
+test_experiment(InformationGainCriteria(), expectedfile, "50%")
+test_experiment(InformationGainCriteria(), expectedfile, "0%")
 
 test_experiment(ClassificationErrorCriteria(), expectedfile, "99%")
-#test_experiment(ClassificationErrorCriteria(), expectedfile, "95%")
-#test_experiment(ClassificationErrorCriteria(), expectedfile, "50%")
-#test_experiment(ClassificationErrorCriteria(), expectedfile, "0%")
+test_experiment(ClassificationErrorCriteria(), expectedfile, "95%")
+test_experiment(ClassificationErrorCriteria(), expectedfile, "50%")
+test_experiment(ClassificationErrorCriteria(), expectedfile, "0%")
 

@@ -93,6 +93,9 @@ class ID3ShroomEvaluator(object):
         predicted_records = []
         for r in actual_db.records:
             predicted_label = id3_tree.classify(r)
+            if not predicted_label:
+                v = actual_db.fetch_class_vector()
+                predicted_label = mode(v)[0]
             predicted_record = ShroomRecord(predicted_label)
             predicted_record.attributes = r.attributes
             predicted_records.append(predicted_record)

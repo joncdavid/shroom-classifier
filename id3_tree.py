@@ -156,6 +156,8 @@ class ID3Tree:
         next_node = None
         for edge in self.adjacency[node]:
             val = shroom_record.attributes[edge.branch_attribute]
+            if val == "?":
+                return None
             if edge.branch_value == val:
                 next_node = edge.destination_node
                 break

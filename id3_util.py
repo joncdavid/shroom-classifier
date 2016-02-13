@@ -122,7 +122,7 @@ def calc_gain(attr, db, defs):
 
     entropy_after = 0.0000
     for symbol in defs.attr_values[attr]:
-        subset_db = filter_subset(db, attr, symbol)
+        subset_db = filter_subset(db, attr, symbol, "?")
         expected_cv = subset_db.fetch_class_vector()
         attr_entropy = calc_entropy(expected_cv)
         attr_entropy *= 1.0*len(expected_cv)/len(cv)
@@ -142,11 +142,14 @@ def calc_entropy(vector):
     entropy = sum(partial_entropy)
     return entropy
 
-def filter_subset(db, attr, filter_value):
+def filter_subset(db, attr, filter_value, ignore=None):
     """Produces a subset database by filtering on attr's filter_value"""
     subset_records = []
     for r in db.records:
-        if r.attributes[attr] == filter_value:
+        v = r.attributes[attr]
+        if v == ignore:
+            continue
+        if v == filter_value:
             subset_records.append(r)
     subset_db = ShroomDatabase(subset_records)
     return subset_db
@@ -163,7 +166,7 @@ def calc2_class_error(attribute, db, defs):
     M = 0.0   # M is misclassification error for this attr.
     n = len(db.fetch_class_vector())
     for symbol in defs.attr_values[attribute]:
-        subset_db = filter_subset(db, attribute, symbol)
+        subset_db = filter_subset(db, attribute, symbol, "?")
         sub_vector = subset_db.fetch_class_vector()
         dist_table = calc_distribution_table(sub_vector)
         prob_p_ = 0.0
@@ -230,7 +233,7 @@ def calc_chi_squared(attr, defs, db):
 
     chi_squared = 0.0
     for symbol in defs.attr_values[attr]:
-        subset_i = filter_subset(db, attr, symbol)
+        subset_i = filter_subset(db, attr, symbol, "?")
         if len(subset_i.records) == 0:
             continue
         subset_v = subset_i.fetch_class_vector()
@@ -254,7 +257,7 @@ def should_prune(chi2, dof, CI, chi_table):
     x = chi_table.get_score(dof, CI)
     if not x:
         return False
-    if chi2 > x:
+    if chi2 < x:
         return True
     return False
             
@@ -284,7 +287,7 @@ class ChiSquareDistributionTable(object):
         alpha = self.ci_alpha_map[CI]
         if not alpha:
             return None
-        return self._get_score(dof, alpha)
+        return float( self._get_score(dof, alpha) )
     
     def _get_score(self, dof, alpha):
         dof_str = str(dof) if isinstance(dof,int) else dof
