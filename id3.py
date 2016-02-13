@@ -33,21 +33,15 @@ def id3(criteria, db, target_attr, attributes, defs, chi_table, CI="0%"):
          
     tree = ID3Tree(decision_node)
     for v in defs.attr_values[A]:
-#        chi_squared = calc_chi_squared(A, defs, dof)
-#        if CI != "0%" and should_prune(chi_squared, A, CI, chi_table):
-#            label = mode2(db.records, target_attr)
-#            return ID3Tree( ID3LeafNode(label))
+        chi_squared = calc_chi_squared(A, defs, db)
+        dof = len(defs.attr_values[A])
+        if CI != "0%" and should_prune(chi_squared, dof, CI, chi_table):
+            label = mode2(db.records, target_attr)[0]
+            return ID3Tree( ID3LeafNode(label))
 
         edge = ID3Edge(A, v)
         subset_db = filter_subset(db, A, v)
         subset_records = subset_db.records
-#        subset_records = []        
-#        for x in db.records:
-#            if x.attributes[A] == v:
-#            if ((x.attributes[A] == v) and  # that's odd... removing this
-#                (x.attributes[A] != '?')):  # guard improves accuracy.
-#                subset_records.append(x)
-
         if len(subset_records) == 0:
             label = mode2(db.records, 'class')[0]
             leaf_node = ID3LeafNode(label)

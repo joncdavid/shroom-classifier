@@ -236,7 +236,6 @@ def calc_chi_squared(attr, defs, db):
         subset_v = subset_i.fetch_class_vector()
         dist_table_v = calc_distribution_table(subset_v)
         
-        print(dist_table_v)
         p_i = 0
         e_i = 0
         if 'p' in dist_table_v:
@@ -251,12 +250,11 @@ def calc_chi_squared(attr, defs, db):
         chi_squared += local_chi2
     return chi_squared
 
-def should_prune(chi2, attribute, CI, chi_table):
-    dof = len(attribute) - 1
-    x = chi_table.get_probability(dof, CI)
+def should_prune(chi2, dof, CI, chi_table):
+    x = chi_table.get_score(dof, CI)
     if not x:
         return False
-    if chi2 >= x:
+    if chi2 > x:
         return True
     return False
             
