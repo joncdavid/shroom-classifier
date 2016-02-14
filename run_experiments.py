@@ -22,7 +22,7 @@ validationfilename = "./data/validation.dat"
 chitable_filename = "./chi_square_table.txt"
 
 
-def test_experiment(criteria, validationfilename, CI):
+def test_experiment(criteria, validationfilename, CI, path):
     print("\n\n")
     print("=====================================================")
     print("Run Experiment")
@@ -44,8 +44,9 @@ def test_experiment(criteria, validationfilename, CI):
     validation_db = ShroomDatabase([], validationfilename)
     predicted_db = evaluator.generate_predicted_db(tree, validation_db)
 
-    savefile = "./results/prediction.{}.{}".format(str(criteria),
-                                         CI)
+    savefile = "{}prediction.{}.{}".format(path,
+                                           str(criteria),
+                                           CI)
     predicted_db.save_class_only(savefile)
     print("\nSaved predicted data to file: {}".format(savefile))
 
@@ -56,19 +57,24 @@ def test_experiment(criteria, validationfilename, CI):
 
 #---- begin ----
 expectedfile = None
-if len(sys.argv) >= 2:
+path = None
+if len(sys.argv) >= 3:
     expectedfile = sys.argv[1]
+    path = sys.argv[2]
 else:
     expectedfile = testfilename
+    path = "./results/test/"
+    
 print("Using validation file: ", expectedfile)
+print("Writing to dir: ", path)
 
-test_experiment(InformationGainCriteria(), expectedfile, "99%")
-test_experiment(InformationGainCriteria(), expectedfile, "95%")
-test_experiment(InformationGainCriteria(), expectedfile, "50%")
-test_experiment(InformationGainCriteria(), expectedfile, "0%")
+test_experiment(InformationGainCriteria(), expectedfile, "99%", path)
+test_experiment(InformationGainCriteria(), expectedfile, "95%", path)
+test_experiment(InformationGainCriteria(), expectedfile, "50%", path)
+test_experiment(InformationGainCriteria(), expectedfile, "0%", path)
 
-test_experiment(ClassificationErrorCriteria(), expectedfile, "99%")
-test_experiment(ClassificationErrorCriteria(), expectedfile, "95%")
-test_experiment(ClassificationErrorCriteria(), expectedfile, "50%")
-test_experiment(ClassificationErrorCriteria(), expectedfile, "0%")
+test_experiment(ClassificationErrorCriteria(), expectedfile, "99%", path)
+test_experiment(ClassificationErrorCriteria(), expectedfile, "95%", path)
+test_experiment(ClassificationErrorCriteria(), expectedfile, "50%", path)
+test_experiment(ClassificationErrorCriteria(), expectedfile, "0%", path)
 

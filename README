@@ -1,0 +1,90 @@
+===========================================================
+README
+-----------------------------------------------------------
+Jon David and Jarrett Decker
+===========================================================
+
+
+Table of Contents
+-----------------------------------------------------------
++ Description
++ Instructions for use
++ File manifest
++ References
+
+
+
+Description
+-----------------------------------------------------------
+This project builds a decision tree model that classifies
+mushroom edibility. The model is trained and evaluated on
+a labeled dataset drawn from The Audubon Society Field
+Guide to North American Mushrooms (1981). It can be found
+in [3].
+
+
+Instructions for use
+-----------------------------------------------------------
+To run any of the scripts below, verify their permissions.
+They should have the permission to execute. If permissions
+are set,
+
+  run: chmod 755 run_experiments.py
+       chmod 755 run_to_submit.sh
+
+
+PART 1: to produce predictions over the validation dataset,
+
+  run: ./run_to_submit.sh
+
+This should generate files in the ./results/ directory:
+  + 
+
+PART 2: to evaluate the model over the test dataset,
+
+  run: python3 run_experiments.py
+
+
+
+
+
+File manifest
+-----------------------------------------------------------
+Data files in ./data/
+ + training.dat
+ + testing.dat
+ + validation.dat
+
+Project files
+ + datadef.py
+ + database.py
+ + id3_evaluator.py
+ + id3.py
+ + id3_tree.py
+ + id3_util.py
+
+Automation scripts
+ + run_experiments.py
+ + run_to_submit.sh
+
+Configuration and utility files
+ + README
+ + chi_square_table.txt
+ + _shroom.data.definition
+
+Test files beginning with test_*
+ + test_chisquare_table.py
+ + test_class_error.py
+ + test_database.py
+ + test_gain.py
+ + test_id3_evaluator.py
+ + test_id3.py
+ + test_id3_tree.py
+
+
+
+References
+-----------------------------------------------------------
+[1] Quinlan
+[2] Mitchell
+[3] Mushroom database in UCI database
