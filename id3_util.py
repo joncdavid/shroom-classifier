@@ -61,7 +61,7 @@ class ClassificationErrorCriteria(SelectionCriteria):
         #          calc_*'s max depth is 15.
         #Both have the same accuracy over the test dataset.
         best_attr = None
-        max_classify_error = 0
+        max_classify_error = 0.0
         for attr in misclass_table:
             classify_error = misclass_table[attr]
             if(classify_error >= max_classify_error):
