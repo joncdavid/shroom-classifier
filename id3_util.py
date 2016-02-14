@@ -54,20 +54,20 @@ class ClassificationErrorCriteria(SelectionCriteria):
         """Recommends the attribute with the minimum
         classification error as the next decision node."""
 
-        misclass_table = calc2_all_class_error(attributes, db, defs)
-        #misclass_table = calc_all_class_error(attributes, db, defs)
+        #misclass_table = calc2_all_class_error(attributes, db, defs)
+        misclass_table = calc_all_class_error(attributes, db, defs)
         #misclass_table = calc_all_class_error(attributes, db, defs)
         #went with calc2_* because max depth is 13, whereas
         #          calc_*'s max depth is 15.
         #Both have the same accuracy over the test dataset.
         best_attr = None
-        min_classify_error = 100000.00
+        max_classify_error = 0
         for attr in misclass_table:
             classify_error = misclass_table[attr]
-            if(classify_error <= min_classify_error):
+            if(classify_error >= max_classify_error):
                 best_attr = attr
-                min_classify_error = classify_error
-        return best_attr, min_classify_error
+                max_classify_error = classify_error
+        return best_attr, max_classify_error
 
 #---- Utility Functions ---------------------------------------------
 
