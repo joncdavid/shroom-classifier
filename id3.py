@@ -34,7 +34,7 @@ def id3(criteria, db, target_attr, attributes, defs,
          
     tree = ID3Tree(decision_node)
     for v in defs.attr_values[A]:
-        #if(v == "?"):
+        #if(v == "?"):         #removed guard to improve accuracy lol
         #    continue
         
         chi_squared = calc_chi_squared(A, defs, db)

@@ -54,12 +54,7 @@ class ClassificationErrorCriteria(SelectionCriteria):
         """Recommends the attribute with the minimum
         classification error as the next decision node."""
 
-        #misclass_table = calc2_all_class_error(attributes, db, defs)
         misclass_table = calc_all_class_error(attributes, db, defs)
-        #misclass_table = calc_all_class_error(attributes, db, defs)
-        #went with calc2_* because max depth is 13, whereas
-        #          calc_*'s max depth is 15.
-        #Both have the same accuracy over the test dataset.
         best_attr = None
         max_classify_error = 0.0
         for attr in misclass_table:
@@ -155,31 +150,6 @@ def filter_subset(db, attr, filter_value, ignore=None):
     subset_db = ShroomDatabase(subset_records)
     return subset_db
 
-# def calc2_all_class_error(attributes, db, defs):
-#     """Calculates misclassification error for all attributes."""
-#     misclass_table = dict()
-#     for attr in attributes:
-#         misclass_table.update({attr:calc2_class_error(attr, db, defs)})
-#     return misclass_table
-#
-# def calc2_class_error(attribute, db, defs):
-#     """Calculates misclassification error for this attribute."""
-#     M = 0.0   # M is misclassification error for this attr.
-#     n = len(db.fetch_class_vector())
-#     for symbol in defs.attr_values[attribute]:
-#         subset_db = filter_subset(db, attribute, symbol) #, "?")rm guard
-#         sub_vector = subset_db.fetch_class_vector()
-#         dist_table = calc_distribution_table(sub_vector)
-#         prob_p_ = 0.0
-#         prob_e_ = 0.0
-#         if 'p' in dist_table:
-#             prob_p_ = float(dist_table['p']) / n
-#         if 'e' in dist_table:
-#             prob_e_ = float(dist_table['e']) / n
-#         n_v = len(sub_vector)
-#         M = M + (1.0 - max(prob_p_, prob_e_))*(float(n_v)/n)
-#     return M
-
 def calc_all_class_error(attributes, db, defs):
     """Calculates the classification error for all attributes of a ShroomDatabase."""
     tot_len = len(db.fetch_class_vector())
@@ -246,7 +216,6 @@ def calc_chi_squared(attr, defs, db):
             p_i = dist_table_v['p']
         if 'e' in dist_table_v:
             e_i = dist_table_v['e']
-        #pdb.set_trace()
         p_i_prime = (p_i + e_i)*(float(p)/(p+e))
         e_i_prime = (p_i + e_i)*(float(e)/(p+e))
         local_chi2 = ( (math.pow((p_i - p_i_prime),2) / p_i_prime) +
@@ -274,7 +243,6 @@ class ChiSquareDistributionTable(object):
         self.load(filename)
 
     def load(self, filename):
-        #pdb.set_trace()
         with open(filename, 'r') as f:
             for line in f:
                 dof, p50, p05, p01 = line.strip().split(",")
