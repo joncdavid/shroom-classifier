@@ -22,6 +22,9 @@ class ID3Node(object):
     
     def __ne__(self, other):
         return not self == other
+
+    def __hash__(self):
+        return id(self)
        
     @abc.abstractmethod
     def print_node(self):
@@ -39,6 +42,9 @@ class ID3LeafNode(ID3Node):
 
     def __ne__(self, other):
         return not self == other
+
+    def __hash__(self):
+        return id(self)
 
     LEAF_STR = "{}(leaf-node (classify {}) (depth {}))"
     def print_node(self):
@@ -70,6 +76,9 @@ class ID3DecisionNode(ID3Node):
     def __ne__(self, other):
         return not self == other
 
+    def __hash__(self):
+        return id(self)
+
     NODE_STR = "{}(decision-node (split (attr {}) (gain {}) (misclassification {}) (chi^2 {}) (depth {})))"
     def print_node(self):
         offset = "\t" * (self.depth*2)
@@ -99,6 +108,9 @@ class ID3Edge:
 
     def __ne__(self, other):
         return not self == other
+
+    def __hash__(self):
+        return id(self)
 
     EDGE_STR = "{}(edge (= {} {}))"
     def print_edge(self, depth):
@@ -156,8 +168,8 @@ class ID3Tree:
         next_node = None
         for edge in self.adjacency[node]:
             val = shroom_record.attributes[edge.branch_attribute]
-            if val == "?":
-                return None
+            #if val == "?":
+            #    return None
             if edge.branch_value == val:
                 next_node = edge.destination_node
                 break

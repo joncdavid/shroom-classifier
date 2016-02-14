@@ -15,7 +15,8 @@ from id3_util import *
 from id3_tree import *
 
     
-def id3(criteria, db, target_attr, attributes, defs, chi_table, CI="0%"):
+def id3(criteria, db, target_attr, attributes, defs,
+        chi_table, CI="0%", ignore=None):
     v = db.fetch_class_vector()
     homogeneous, label = is_homogeneous(v)
     if(homogeneous):
@@ -33,8 +34,8 @@ def id3(criteria, db, target_attr, attributes, defs, chi_table, CI="0%"):
          
     tree = ID3Tree(decision_node)
     for v in defs.attr_values[A]:
-        if(v == "?"):
-            continue
+        #if(v == "?"):
+        #    continue
         
         chi_squared = calc_chi_squared(A, defs, db)
         dof = len(defs.attr_values[A])
@@ -43,7 +44,7 @@ def id3(criteria, db, target_attr, attributes, defs, chi_table, CI="0%"):
             return ID3Tree( ID3LeafNode(label))
 
         edge = ID3Edge(A, v)
-        subset_db = filter_subset(db, A, v, "?") #removed guard to improve acc.
+        subset_db = filter_subset(db, A, v) #"?") #removed guard to improve acc.
         subset_records = subset_db.records
         if len(subset_records) == 0:
             label = mode2(db.records, 'class')[0]

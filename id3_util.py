@@ -56,6 +56,7 @@ class ClassificationErrorCriteria(SelectionCriteria):
 
         misclass_table = calc2_all_class_error(attributes, db, defs)
         #misclass_table = calc_all_class_error(attributes, db, defs)
+        #misclass_table = calc_all_class_error(attributes, db, defs)
         #went with calc2_* because max depth is 13, whereas
         #          calc_*'s max depth is 15.
         #Both have the same accuracy over the test dataset.
@@ -63,7 +64,7 @@ class ClassificationErrorCriteria(SelectionCriteria):
         min_classify_error = 100000.00
         for attr in misclass_table:
             classify_error = misclass_table[attr]
-            if(classify_error < min_classify_error):
+            if(classify_error <= min_classify_error):
                 best_attr = attr
                 min_classify_error = classify_error
         return best_attr, min_classify_error
@@ -166,7 +167,7 @@ def calc2_class_error(attribute, db, defs):
     M = 0.0   # M is misclassification error for this attr.
     n = len(db.fetch_class_vector())
     for symbol in defs.attr_values[attribute]:
-        subset_db = filter_subset(db, attribute, symbol, "?")
+        subset_db = filter_subset(db, attribute, symbol) #, "?")rm guard
         sub_vector = subset_db.fetch_class_vector()
         dist_table = calc_distribution_table(sub_vector)
         prob_p_ = 0.0
@@ -233,7 +234,7 @@ def calc_chi_squared(attr, defs, db):
 
     chi_squared = 0.0
     for symbol in defs.attr_values[attr]:
-        subset_i = filter_subset(db, attr, symbol, "?")
+        subset_i = filter_subset(db, attr, symbol) #, "?")#rm guard
         if len(subset_i.records) == 0:
             continue
         subset_v = subset_i.fetch_class_vector()
