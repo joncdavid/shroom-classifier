@@ -26,8 +26,8 @@ for attr in class_error_table:
 print("\nMisclassification2 table:")
 class_error2_table = calc2_all_class_error(mydefs.attr_set,
                                            mydb, mydefs)
-for attr in class_error_table:
-    error2 = class_error_table[attr]
+for attr in class_error2_table:
+    error2 = class_error2_table[attr]
     print(attr, ": ", error2)
 
 

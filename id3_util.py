@@ -155,30 +155,30 @@ def filter_subset(db, attr, filter_value, ignore=None):
     subset_db = ShroomDatabase(subset_records)
     return subset_db
 
-def calc2_all_class_error(attributes, db, defs):
-    """Calculates misclassification error for all attributes."""
-    misclass_table = dict()
-    for attr in attributes:
-        misclass_table.update({attr:calc2_class_error(attr, db, defs)})
-    return misclass_table
-
-def calc2_class_error(attribute, db, defs):
-    """Calculates misclassification error for this attribute."""
-    M = 0.0   # M is misclassification error for this attr.
-    n = len(db.fetch_class_vector())
-    for symbol in defs.attr_values[attribute]:
-        subset_db = filter_subset(db, attribute, symbol) #, "?")rm guard
-        sub_vector = subset_db.fetch_class_vector()
-        dist_table = calc_distribution_table(sub_vector)
-        prob_p_ = 0.0
-        prob_e_ = 0.0
-        if 'p' in dist_table:
-            prob_p_ = float(dist_table['p']) / n
-        if 'e' in dist_table:
-            prob_e_ = float(dist_table['e']) / n
-        n_v = len(sub_vector)
-        M = M + (1.0 - max(prob_p_, prob_e_))*(float(n_v)/n)
-    return M
+# def calc2_all_class_error(attributes, db, defs):
+#     """Calculates misclassification error for all attributes."""
+#     misclass_table = dict()
+#     for attr in attributes:
+#         misclass_table.update({attr:calc2_class_error(attr, db, defs)})
+#     return misclass_table
+#
+# def calc2_class_error(attribute, db, defs):
+#     """Calculates misclassification error for this attribute."""
+#     M = 0.0   # M is misclassification error for this attr.
+#     n = len(db.fetch_class_vector())
+#     for symbol in defs.attr_values[attribute]:
+#         subset_db = filter_subset(db, attribute, symbol) #, "?")rm guard
+#         sub_vector = subset_db.fetch_class_vector()
+#         dist_table = calc_distribution_table(sub_vector)
+#         prob_p_ = 0.0
+#         prob_e_ = 0.0
+#         if 'p' in dist_table:
+#             prob_p_ = float(dist_table['p']) / n
+#         if 'e' in dist_table:
+#             prob_e_ = float(dist_table['e']) / n
+#         n_v = len(sub_vector)
+#         M = M + (1.0 - max(prob_p_, prob_e_))*(float(n_v)/n)
+#     return M
 
 def calc_all_class_error(attributes, db, defs):
     """Calculates the classification error for all attributes of a ShroomDatabase."""
