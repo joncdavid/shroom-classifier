@@ -8,8 +8,10 @@
 import abc
 import pdb
 import math
+
 from datadef import ShroomDefs
 from database import ShroomDatabase
+from id3_rules import *
 
 
 class ID3Node(object):
@@ -201,6 +203,28 @@ class ID3Tree:
                 if node.depth > max_depth:
                     max_depth = node.depth
         return max_depth
+
+    def generate_rules(self):
+        """Generates a list of ID3Rules from this tree."""
+        #pdb.set_trace()
+        return self._generate_rules(self.root, [], [])
+
+    def _generate_rules(self, node, cond_stack, rule_list):
+        if isinstance(node, ID3LeafNode):
+            rule = ID3Rule(node.classification)
+            rule.antecedent.extend(cond_stack)
+            rule_list.append(rule)
+            return rule_list
+
+        for edge in self.adjacency[node]:
+            c = ID3Condition(edge.branch_attribute, edge.branch_value)
+            cond_stack.append(c)
+            next_node = edge.destination_node
+            self._generate_rules(next_node, cond_stack, rule_list)
+            cond_stack.pop()
+            
+        return rule_list
+            
     
     def print_summary(self):
         """Prints tree summary."""

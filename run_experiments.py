@@ -16,7 +16,6 @@ from id3 import *
 
 deffilename = "_shroom.data.definition"
 trainfilename = "./data/training.dat"  
-#trainfilename = "./data/training.clean.dat"  #this lowers accuracy
 testfilename = "./data/testing.dat"
 validationfilename = "./data/validation.dat"
 chitable_filename = "./chi_square_table.txt"
