@@ -182,47 +182,92 @@ in \parencite{quinlan1986induction} and is defined in Algorithm 1.
 
 
 \subsection{Attribute Selection}
-The two methods of information gain we needed to use were entropy and
-misclassification error. We created two classes to deal with this,
-InformationGainCriteria and ClassificationErrorCriteria. The purpose
-of these classes were to be able to read through a database and then
-produce the best attribute candidate for splitting the database at the
-given node. Both of these methods work in similar ways. Entropy is
-calculated as -P(x)log(P(x)) and InformationGainCriteria would take
-the entropy at the parent node and subtract the weighted entropy of
-each of the child nodes after a simulated split for each possible
-attribute.
+Attribute selection is the process of selecting the attribute which
+best partitions the dataset such that the subset datasets become more
+homogeneous and easier to classify.
 
-\subsubsection{Selection via information gain}
-Algorithm for selecting the best attribute using information gain.
+Two methods implement attribute selection. The first method seeks to
+maximize information gain and the second seeks to minimize
+misclassification error.
 
-We use the definition of entropy as defined in \parencite{mitchell1997machine}:
+\subsubsection{Attribute selection via information gain}
+Attribute selection via information gain makes use of an idea borrowed
+from information theory.
+
+We use the definition of entropy as defined
+in \parencite{mitchell1997machine}:
 \begin{equation}
 \label{entropy-equation}
 Entropy(S) = \sum_{v\in val(A)}-p_ilog_2(p_i)
 \end{equation}
 
-Equation for information gain:
+Where $S$ is the dataset at the current node, $A$ is the current
+attribute of interest, and $p_i$ is the proportion of samples $\in$ $S$
+whose attribute value equals $v$.
+
+The entropy function is used when calculating the information gain on
+each attribute. We use the definition of information gain as defined
+in \parencite{mitchell1997machine}:
 \begin{equation}
 \label{information-gain-equation}
 Gain(S,A) = Entropy(S) -\sum_{v \in val(A)}\frac{|S_v|}{|S|}Entropy(S_v)
 \end{equation}
 
+The best attribute is the one with the greatest information gain. The
+information gain algorithm is defined in algorithm 2.
 
-We select the attribute that offers the greatest information gain.
+\begin{algorithm}
+\caption{calculate misclassification error}
+\begin{algorithmic}
+\Statex\Comment{ \%Input: attribute A, dataset D\%}
+\State $entropybefore$ $\leftarrow$ Entropy($D$)
+\State $entropyafter$ $\leftarrow$ 0.0
+\For{$v$ $\in$ vals($A$)}
+  \State Let $D_v$ $\subseteq$ $D$, such that $D$[$A$] = $v$
+  \State $localentropy$ $\leftarrow$ $\frac{|D_v|}{|D|}$ $\times$ Entropy($D_v$)
+  \State $entropyafter$ $\leftarrow$ $entropyafter$ + $localentropy$
+\EndFor
 
-\subsubsection{Selection via misclassification error}
-Algorithm for selecting the best attribute using misclassification
-error.
+\State $gain$ $\leftarrow$ $entropybefore$ - $entropyafter$
+\State return $gain$
+\end{algorithmic}
+\end{algorithm}
 
-Equation for misclassification error.
+
+\subsubsection{Attribute selection via misclassification error}
+Attribute selection via misclassification error criteria is a more
+na{\"i}ve method. But it's easier to calculate. We define the
+misclassification error as follows:
+
 \begin{equation}
 \label{misclassification-error-equation}
-M_E = 1 - max(p_1, p_2, ..., p_n) 
+M_E(S,A) = 1 - max(p_a, p_b, ..., p_k) 
 \end{equation}
-We select the attribute that offers the minimal misclassification
+
+Where, $S$ is the dataset available at the current node, $A$ is the
+attribute we are calculating the misclassification error for, and $p_x$
+is the proportion of samples in $S$ such that $S$[$A$] = $x$.
+
+After calculating the misclassification error for each attribute, the
+best attribute is the one that offers the minimal misclassification
 error.
 
+\begin{algorithm}
+\caption{calculate misclassification error}
+\begin{algorithmic}
+\Statex \Comment{\%Input: attribute A, dataset S \%}
+\State Let $T$ be a frequency table
+\State Let $P$ be a table of proportions
+\For{each $v$ $\in$ val($A$)}
+  \For{each $example$ $\in$ $S$}
+    \State $T$[$v$] $\leftarrow$ $T$[$v$] + 1, if $S$[$A$]=$v$
+  \EndFor
+  \State $P$[$v$] $\leftarrow$ $T$[$v$] / $\lvert S \rvert$
+\EndFor
+\State return 1-max($\lbrace p \mid p \in P\rbrace$)
+
+\end{algorithmic}
+\end{algorithm}
 
 \subsection{Overfitting and Branch Pruning}
 A tendency for decision tree models is to overfit the training
@@ -245,6 +290,12 @@ Where,
 \label{chi-square-helper-equation}
 p'_i = p \times \frac{p_i+e_i}{p+e}
 \end{equation}
+
+When the calculated $\chi^2$ value is greater than the value provided by
+the $\chi^2$ distribution table, continue splitting the tree. Otherwise,
+stop splitting. This method is called split-stopping and is one method
+of preventing a decision tree from overfitting.
+
 
 \subsection{Classification}
 Stuff about classification. Now here's the classify algorithm.
@@ -383,10 +434,17 @@ cap, then it is poisonous.
 
 
 \section{Conclusions}
+Given the performance of the decision trees it is tempting to suggest
+that the classification of poisonous and edible mushrooms is an easy
+task. However, the consumption of an incorrectly identified edible
+mushroom can be fatal. It is important to remember that models are
+representations of the things they are modeling and that no model is
+ever 100\% complete. 
 
 \printbibliography
 
 \newpage
+\onecolumn
 \appendix
 \section{ Classification Rules}
 These are the classification rules produced by a decision tree using

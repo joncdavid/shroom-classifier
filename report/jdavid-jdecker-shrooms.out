@@ -4,8 +4,8 @@
 \BOOKMARK [2][-]{subsection.2.2}{Tree Building}{section.2}% 4
 \BOOKMARK [2][-]{subsection.2.3}{ID3 Algorithm}{section.2}% 5
 \BOOKMARK [2][-]{subsection.2.4}{Attribute Selection}{section.2}% 6
-\BOOKMARK [3][-]{subsubsection.2.4.1}{Selection via information gain}{subsection.2.4}% 7
-\BOOKMARK [3][-]{subsubsection.2.4.2}{Selection via misclassification error}{subsection.2.4}% 8
+\BOOKMARK [3][-]{subsubsection.2.4.1}{Attribute selection via information gain}{subsection.2.4}% 7
+\BOOKMARK [3][-]{subsubsection.2.4.2}{Attribute selection via misclassification error}{subsection.2.4}% 8
 \BOOKMARK [2][-]{subsection.2.5}{Overfitting and Branch Pruning}{section.2}% 9
 \BOOKMARK [2][-]{subsection.2.6}{Classification}{section.2}% 10
 \BOOKMARK [1][-]{section.3}{Experiments}{}% 11

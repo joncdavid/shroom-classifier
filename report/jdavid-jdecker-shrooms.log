@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.14159265-2.6-1.40.15 (TeX Live 2015/dev/Debian) (preloaded format=pdflatex 2015.9.4)  15 FEB 2016 04:20
+This is pdfTeX, Version 3.14159265-2.6-1.40.15 (TeX Live 2015/dev/Debian) (preloaded format=pdflatex 2015.9.4)  15 FEB 2016 06:24
 entering extended mode
  restricted \write18 enabled.
  file:line:error style messages enabled.
@@ -608,17 +608,17 @@ File: ot1pcr.fd 2001/06/04 font definitions for OT1/pcr.
 )
 Package hyperref Info: bookmark level for unknown algorithm defaults to 0 on in
 put line 143.
- [1{/var/lib/texmf/fonts/map/pdftex/updmap/pdftex.map}
+
+Underfull \hbox (badness 2042) in paragraph at lines 189--192
+[]\OT1/ptm/m/n/10 Two meth-ods im-ple-ment at-tribute se-lec-tion. The first
+ []
+
+[1{/var/lib/texmf/fonts/map/pdftex/updmap/pdftex.map}
 
 
 ] [2]
-Underfull \hbox (badness 1859) in paragraph at lines 359--367
+Underfull \hbox (badness 1859) in paragraph at lines 410--418
 []\OT1/ptm/m/n/10 All eight trees pro-duced from information-gain cri-te-
- []
-
-
-Underfull \hbox (badness 1596) in paragraph at lines 388--388
-[]\OT1/ptm/m/n/10 J. Schlim-mer, ``Mush-room records drawn from the
  []
 
 [3pdfTeX warning (ext4): destination with the same identifier (name{table.1}) h
@@ -626,209 +626,105 @@ as been already used, duplicate ignored
 
 \AtBegShi@Output ...ipout \box \AtBeginShipoutBox 
                                                   \fi \fi 
-l.389 \newpage
-              pdfTeX warning (ext4): destination with the same identifier (name
-{table.2}) has been already used, duplicate ignored
+l.434 
+      pdfTeX warning (ext4): destination with the same identifier (name{table.2
+}) has been already used, duplicate ignored
 
 \AtBegShi@Output ...ipout \box \AtBeginShipoutBox 
                                                   \fi \fi 
-l.389 \newpage
-              ]
-** WARNING: Ignoring useless \section in Appendix (line 391).
+l.434 
+      ]
+Underfull \hbox (badness 1596) in paragraph at lines 445--445
+[]\OT1/ptm/m/n/10 J. Schlim-mer, ``Mush-room records drawn from the
+ []
 
-Underfull \hbox (badness 10000) in paragraph at lines 413--414
-[]\OT1/pcr/m/n/10 [R9] IF ((odor=n) AND
+[4
+
+]
+** WARNING: Ignoring useless \section in Appendix (line 449).
+
+Underfull \hbox (badness 10000) in paragraph at lines 483--484
+[]\OT1/pcr/m/n/10 [R14] IF ((odor=n) AND (spore-print-color=w) AND (stalk-root=
+?) AND (gill-size=b)),
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 415--416
-[]\OT1/pcr/m/n/10 [R10] IF ((odor=n) AND
+Underfull \hbox (badness 10000) in paragraph at lines 486--487
+[]\OT1/pcr/m/n/10 [R15] IF ((odor=n) AND (spore-print-color=w) AND (stalk-root=
+?) AND (gill-size=n)),
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 417--418
-[]\OT1/pcr/m/n/10 [R11] IF ((odor=n) AND
+Underfull \hbox (badness 10000) in paragraph at lines 495--496
+[]\OT1/pcr/m/n/10 [R18] IF ((odor=n) AND (spore-print-color=w) AND (stalk-root=
+b) AND (cap-color=c)),
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 419--420
-[]\OT1/pcr/m/n/10 [R12] IF ((odor=n) AND
+Underfull \hbox (badness 10000) in paragraph at lines 498--499
+[]\OT1/pcr/m/n/10 [R19] IF ((odor=n) AND (spore-print-color=w) AND (stalk-root=
+b) AND (cap-color=r)),
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 422--423
-[]\OT1/pcr/m/n/10 [R13] IF ((odor=n) AND
+Underfull \hbox (badness 10000) in paragraph at lines 501--502
+[]\OT1/pcr/m/n/10 [R20] IF ((odor=n) AND (spore-print-color=w) AND (stalk-root=
+b) AND (cap-color=b)),
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 425--426
-[]\OT1/pcr/m/n/10 [R14] IF ((odor=n) AND
+Underfull \hbox (badness 10000) in paragraph at lines 504--505
+[]\OT1/pcr/m/n/10 [R21] IF ((odor=n) AND (spore-print-color=w) AND (stalk-root=
+b) AND (cap-color=p)),
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 425--426
-\OT1/pcr/m/n/10 (spore-print-color=w) AND (stalk-root=?)
+Underfull \hbox (badness 10000) in paragraph at lines 507--508
+[]\OT1/pcr/m/n/10 [R22] IF ((odor=n) AND (spore-print-color=w) AND (stalk-root=
+b) AND (cap-color=w)),
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 428--429
-[]\OT1/pcr/m/n/10 [R15] IF ((odor=n) AND
+Underfull \hbox (badness 10000) in paragraph at lines 510--511
+[]\OT1/pcr/m/n/10 [R23] IF ((odor=n) AND (spore-print-color=w) AND (stalk-root=
+b) AND (cap-color=y)),
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 428--429
-\OT1/pcr/m/n/10 (spore-print-color=w) AND (stalk-root=?)
+Underfull \hbox (badness 10000) in paragraph at lines 513--514
+[]\OT1/pcr/m/n/10 [R24] IF ((odor=n) AND (spore-print-color=w) AND (stalk-root=
+b) AND (cap-color=n)),
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 431--432
-[]\OT1/pcr/m/n/10 [R16] IF ((odor=n) AND
+Underfull \hbox (badness 10000) in paragraph at lines 516--517
+[]\OT1/pcr/m/n/10 [R25] IF ((odor=n) AND (spore-print-color=w) AND (stalk-root=
+b) AND (cap-color=e)),
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 434--435
-[]\OT1/pcr/m/n/10 [R17] IF ((odor=n) AND
+Underfull \hbox (badness 10000) in paragraph at lines 519--520
+[]\OT1/pcr/m/n/10 [R26] IF ((odor=n) AND (spore-print-color=w) AND (stalk-root=
+b) AND (cap-color=u)),
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 437--438
-[]\OT1/pcr/m/n/10 [R18] IF ((odor=n) AND
+Underfull \hbox (badness 10000) in paragraph at lines 522--523
+[]\OT1/pcr/m/n/10 [R27] IF ((odor=n) AND (spore-print-color=w) AND (stalk-root=
+b) AND (cap-color=g)),
  []
 
+Package atveryend Info: Empty hook `BeforeClearDocument' on input line 540.
+[5
 
-Underfull \hbox (badness 10000) in paragraph at lines 437--438
-\OT1/pcr/m/n/10 (spore-print-color=w) AND (stalk-root=b)
- []
-
-
-Underfull \hbox (badness 10000) in paragraph at lines 440--441
-[]\OT1/pcr/m/n/10 [R19] IF ((odor=n) AND
- []
-
-
-Underfull \hbox (badness 10000) in paragraph at lines 440--441
-\OT1/pcr/m/n/10 (spore-print-color=w) AND (stalk-root=b)
- []
-
-
-Underfull \hbox (badness 10000) in paragraph at lines 443--444
-[]\OT1/pcr/m/n/10 [R20] IF ((odor=n) AND
- []
-
-
-Underfull \hbox (badness 10000) in paragraph at lines 443--444
-\OT1/pcr/m/n/10 (spore-print-color=w) AND (stalk-root=b)
- []
-
-
-Underfull \hbox (badness 10000) in paragraph at lines 446--447
-[]\OT1/pcr/m/n/10 [R21] IF ((odor=n) AND
- []
-
-
-Underfull \hbox (badness 10000) in paragraph at lines 446--447
-\OT1/pcr/m/n/10 (spore-print-color=w) AND (stalk-root=b)
- []
-
-
-Underfull \hbox (badness 10000) in paragraph at lines 449--450
-[]\OT1/pcr/m/n/10 [R22] IF ((odor=n) AND
- []
-
-
-Underfull \hbox (badness 10000) in paragraph at lines 449--450
-\OT1/pcr/m/n/10 (spore-print-color=w) AND (stalk-root=b)
- []
-
-
-Underfull \hbox (badness 10000) in paragraph at lines 452--453
-[]\OT1/pcr/m/n/10 [R23] IF ((odor=n) AND
- []
-
-
-Underfull \hbox (badness 10000) in paragraph at lines 452--453
-\OT1/pcr/m/n/10 (spore-print-color=w) AND (stalk-root=b)
- []
-
-
-Underfull \hbox (badness 10000) in paragraph at lines 455--456
-[]\OT1/pcr/m/n/10 [R24] IF ((odor=n) AND
- []
-
-
-Underfull \hbox (badness 10000) in paragraph at lines 455--456
-\OT1/pcr/m/n/10 (spore-print-color=w) AND (stalk-root=b)
- []
-
-
-Underfull \hbox (badness 10000) in paragraph at lines 458--459
-[]\OT1/pcr/m/n/10 [R25] IF ((odor=n) AND
- []
-
-
-Underfull \hbox (badness 10000) in paragraph at lines 458--459
-\OT1/pcr/m/n/10 (spore-print-color=w) AND (stalk-root=b)
- []
-
-
-Underfull \hbox (badness 10000) in paragraph at lines 461--462
-[]\OT1/pcr/m/n/10 [R26] IF ((odor=n) AND
- []
-
-
-Underfull \hbox (badness 10000) in paragraph at lines 461--462
-\OT1/pcr/m/n/10 (spore-print-color=w) AND (stalk-root=b)
- []
-
-
-Underfull \hbox (badness 10000) in paragraph at lines 464--465
-[]\OT1/pcr/m/n/10 [R27] IF ((odor=n) AND
- []
-
-
-Underfull \hbox (badness 10000) in paragraph at lines 464--465
-\OT1/pcr/m/n/10 (spore-print-color=w) AND (stalk-root=b)
- []
-
-
-Underfull \hbox (badness 10000) in paragraph at lines 467--468
-[]\OT1/pcr/m/n/10 [R28] IF ((odor=n) AND
- []
-
-
-Underfull \hbox (badness 10000) in paragraph at lines 470--471
-[]\OT1/pcr/m/n/10 [R29] IF ((odor=n) AND
- []
-
-
-Underfull \hbox (badness 10000) in paragraph at lines 472--473
-[]\OT1/pcr/m/n/10 [R30] IF ((odor=n) AND
- []
-
-
-Underfull \hbox (badness 10000) in paragraph at lines 474--475
-[]\OT1/pcr/m/n/10 [R31] IF ((odor=n) AND
- []
-
-
-Underfull \hbox (badness 10000) in paragraph at lines 476--477
-[]\OT1/pcr/m/n/10 [R32] IF ((odor=n) AND
- []
-
-
-Underfull \hbox (badness 10000) in paragraph at lines 478--479
-[]\OT1/pcr/m/n/10 [R33] IF ((odor=n) AND
- []
-
-Package atveryend Info: Empty hook `BeforeClearDocument' on input line 482.
-[4]
-Package atveryend Info: Empty hook `AfterLastShipout' on input line 482.
+]
+Package atveryend Info: Empty hook `AfterLastShipout' on input line 540.
  (./jdavid-jdecker-shrooms.aux)
-Package atveryend Info: Executing hook `AtVeryEndDocument' on input line 482.
-Package atveryend Info: Executing hook `AtEndAfterFileList' on input line 482.
+Package atveryend Info: Executing hook `AtVeryEndDocument' on input line 540.
+Package atveryend Info: Executing hook `AtEndAfterFileList' on input line 540.
 Package rerunfilecheck Info: File `jdavid-jdecker-shrooms.out' has not changed.
 
-(rerunfilecheck)             Checksum: 38C32058194824B80AF8AC4F662C42B3;1211.
+(rerunfilecheck)             Checksum: 4D1C455D3A83D96FB00867A1D17EF495;1231.
 
 
 LaTeX Warning: There were multiply-defined labels.
@@ -838,31 +734,32 @@ Package logreq Info: Writing requests to 'jdavid-jdecker-shrooms.run.xml'.
 
  ) 
 Here is how much of TeX's memory you used:
- 11247 strings out of 493105
- 182099 string characters out of 6137073
- 389857 words of memory out of 5000000
- 14584 multiletter control sequences out of 15000+600000
+ 11253 strings out of 493105
+ 182165 string characters out of 6137073
+ 393857 words of memory out of 5000000
+ 14587 multiletter control sequences out of 15000+600000
  40673 words of font info for 80 fonts, out of 8000000 for 9000
  1141 hyphenation exceptions out of 8191
- 39i,8n,48p,840b,907s stack positions out of 5000i,500n,10000p,200000b,80000s
+ 39i,8n,48p,840b,905s stack positions out of 5000i,500n,10000p,200000b,80000s
 {/usr/share/texlive/texmf-dist/fonts/enc/dvips/base/8r.enc}</usr/share/texliv
 e/texmf-dist/fonts/type1/public/amsfonts/cm/cmex10.pfb></usr/share/texlive/texm
 f-dist/fonts/type1/public/amsfonts/cm/cmmi10.pfb></usr/share/texlive/texmf-dist
-/fonts/type1/public/amsfonts/cm/cmmi7.pfb></usr/share/texlive/texmf-dist/fonts/
-type1/public/amsfonts/cm/cmmi8.pfb></usr/share/texlive/texmf-dist/fonts/type1/p
-ublic/amsfonts/cm/cmr10.pfb></usr/share/texlive/texmf-dist/fonts/type1/public/a
-msfonts/cm/cmr7.pfb></usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/
-cm/cmr8.pfb></usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmsy1
-0.pfb></usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmsy7.pfb><
-/usr/share/texlive/texmf-dist/fonts/type1/urw/courier/ucrr8a.pfb></usr/share/te
-xlive/texmf-dist/fonts/type1/urw/times/utmb8a.pfb></usr/share/texlive/texmf-dis
-t/fonts/type1/urw/times/utmbi8a.pfb></usr/share/texlive/texmf-dist/fonts/type1/
-urw/times/utmr8a.pfb></usr/share/texlive/texmf-dist/fonts/type1/urw/times/utmri
-8a.pfb>
-Output written on jdavid-jdecker-shrooms.pdf (4 pages, 159909 bytes).
+/fonts/type1/public/amsfonts/cm/cmmi5.pfb></usr/share/texlive/texmf-dist/fonts/
+type1/public/amsfonts/cm/cmmi7.pfb></usr/share/texlive/texmf-dist/fonts/type1/p
+ublic/amsfonts/cm/cmmi8.pfb></usr/share/texlive/texmf-dist/fonts/type1/public/a
+msfonts/cm/cmr10.pfb></usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts
+/cm/cmr7.pfb></usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmr8
+.pfb></usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmsy10.pfb><
+/usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmsy7.pfb></usr/sh
+are/texlive/texmf-dist/fonts/type1/urw/courier/ucrr8a.pfb></usr/share/texlive/t
+exmf-dist/fonts/type1/urw/times/utmb8a.pfb></usr/share/texlive/texmf-dist/fonts
+/type1/urw/times/utmbi8a.pfb></usr/share/texlive/texmf-dist/fonts/type1/urw/tim
+es/utmr8a.pfb></usr/share/texlive/texmf-dist/fonts/type1/urw/times/utmri8a.pfb>
+
+Output written on jdavid-jdecker-shrooms.pdf (5 pages, 171699 bytes).
 PDF statistics:
- 192 PDF objects out of 1000 (max. 8388607)
- 170 compressed objects within 2 object streams
- 38 named destinations out of 1000 (max. 500000)
+ 203 PDF objects out of 1000 (max. 8388607)
+ 179 compressed objects within 2 object streams
+ 41 named destinations out of 1000 (max. 500000)
  153 words of extra memory for PDF output out of 10000 (max. 10000000)
 
