@@ -52,7 +52,7 @@ with a few rules to help us identify poisonous mushrooms in the real
 world. 
 \end{abstract}
 
-\section{Background on Decision Trees}
+\section{Introduction}
 We should cite \parencite{mitchell1997machine} here.
 Typically, a machine learning algorithm works by taking a known set of
 data and devising a function that generalizes it. Computers allow us
@@ -140,14 +140,17 @@ in \parencite{quinlan1986induction} and is defined in Algorithm 1.
 
 \begin{algorithm}
 \label{id3algorithm}
-\caption{id3($C$, $D$, $T$, $A$, $\alpha$)}
+\caption{id3($C$, $S$, $T$, $A$, $\alpha$)}
 \begin{algorithmic}
-\If{$D$'s class is homogeneous}
-  \State $label$ $\leftarrow$ mode($D$['class'])
+\Statex \Comment{ \% Input: attribute-selection criteria $C$,  \%}
+\Statex \Comment{ \% Input: set of examples $S$, target attribute $T$ \%}
+\Statex \Comment{ \% Input: set of attributes $A$, 1-confidence $\alpha$  \%}
+\If{$S$'s class is homogeneous}
+  \State $label$ $\leftarrow$ mode($S$['class'])
   \State return ID3Tree( ID3LeafNode($label$) )
 \EndIf
 \If{$A$ = $\emptyset$}
-  \State $label$ $\leftarrow$ mode($D$[T])
+  \State $label$ $\leftarrow$ mode($S$[T])
   \State return ID3Tree( ID3LeafNode($label$) )
 \EndIf
 
@@ -156,21 +159,21 @@ in \parencite{quinlan1986induction} and is defined in Algorithm 1.
 
 \State $tree$ $\leftarrow$ ID3Tree($decisionnode$)
 \For{$v$ $\in$ val($R$)}
-  \State $\chi^2$ $\leftarrow$ calculate $\chi^2$ using $R$, $D$
+  \State $\chi^2$ $\leftarrow$ calculate $\chi^2$ using $R$, $S$
   \State $dof$ $\leftarrow$ (number of valid values in $A$) - 1
-  \If{ShouldPrune($\chi^2$, $dof$, $\alpha$)}
-    \State $label$ $\leftarrow$ mode($D$[$T$])
+  \If{not ShouldPrune($\chi^2$, $dof$, $\alpha$)}
+    \State $label$ $\leftarrow$ mode($S$[$T$])
     \State return ID3Tree( ID3Leaf($label$) )
   \EndIf
 
   \State $edge$ $\leftarrow$ new ID3Edge($R$, $v$)
-  \State Let $D_v$ $\subseteq$ $D$ such that $D$[$R$] = $v$
-  \If{$D_v$ = $\emptyset$}
-    \State $label$ $\leftarrow$ mode($D$['class'])
+  \State Let $S_v$ $\subseteq$ $S$ such that $S$[$R$] = $v$
+  \If{$S_v$ = $\emptyset$}
+    \State $label$ $\leftarrow$ mode($S$['class'])
     \State $leafnode$ $\leftarrow$ ID3LeafNode[$label$]
     \State $tree$.add($decisionnode$, $edge$, $leafnode$)
   \Else
-    \State $subtree$ $\leftarrow$ id3($C$, $D_v$, $T$, $A$-$R$, $\alpha$)
+    \State $subtree$ $\leftarrow$ id3($C$, $S_v$, $T$, $A$-$R$, $\alpha$)
     \State $tree$.addtree($decisionnode$, $edge$, $subtree$)
   \EndIf
 
@@ -217,14 +220,14 @@ The best attribute is the one with the greatest information gain. The
 information gain algorithm is defined in algorithm 2.
 
 \begin{algorithm}
-\caption{calculate misclassification error}
+\caption{calculate information gain($A$, $S$)}
 \begin{algorithmic}
-\Statex\Comment{ \%Input: attribute A, dataset D\%}
-\State $entropybefore$ $\leftarrow$ Entropy($D$)
+\Statex\Comment{ \%Input: attribute A, dataset S\%}
+\State $entropybefore$ $\leftarrow$ Entropy($S$)
 \State $entropyafter$ $\leftarrow$ 0.0
 \For{$v$ $\in$ vals($A$)}
-  \State Let $D_v$ $\subseteq$ $D$, such that $D$[$A$] = $v$
-  \State $localentropy$ $\leftarrow$ $\frac{|D_v|}{|D|}$ $\times$ Entropy($D_v$)
+  \State Let $S_v$ $\subseteq$ $S$, such that $S$[$A$] = $v$
+  \State $localentropy$ $\leftarrow$ $\frac{|S_v|}{|S|}$ $\times$ Entropy($S_v$)
   \State $entropyafter$ $\leftarrow$ $entropyafter$ + $localentropy$
 \EndFor
 
@@ -253,9 +256,9 @@ best attribute is the one that offers the minimal misclassification
 error.
 
 \begin{algorithm}
-\caption{calculate misclassification error}
+\caption{calculate misclassification error($A$, $S$)}
 \begin{algorithmic}
-\Statex \Comment{\%Input: attribute A, dataset S \%}
+\Statex \Comment{\%Input: attribute $A$, dataset $S$ \%}
 \State Let $T$ be a frequency table
 \State Let $P$ be a table of proportions
 \For{each $v$ $\in$ val($A$)}
@@ -298,10 +301,20 @@ of preventing a decision tree from overfitting.
 
 
 \subsection{Classification}
-Stuff about classification. Now here's the classify algorithm.
+Classification is the process of using a trained model to make
+predictions on new examples. Specifically the decision tree predicts
+whether a mushroom is poisonous or edible.
+
+Because this model is a tree, it is simple to define a recursive
+definition to classify an example. If the current node is a leaf,
+return that leaf's classification; otherwise, it is a decision
+node. Ask each of this decision node's children to classify themselves.
+
+
 \begin{algorithm}
-\caption{tree.classify(node, record)}
+\caption{classify($node$, $example$)}
 \begin{algorithmic}
+\Statex \Comment{ \% Input: ID3Node $node$, $example$ \%}
 \If{$node$ is $None$}
   \State return most common class in this tree
 \EndIf
@@ -311,12 +324,12 @@ Stuff about classification. Now here's the classify algorithm.
 \State $nextnode$ $\leftarrow$ $None$
 \For {each $edge$ emerging from $node$}
   \State $attribute$ $\leftarrow$ $edge.branchattribute$
-  \If {$edge.branchvalue$ = $record$[$attribute$]}
+  \If {$edge.branchvalue$ = $example$[$attribute$]}
     \State $nextnode$ $\leftarrow$ $edge.destinationnode$
     \State break
   \EndIf
 \EndFor
-\State return classify($nextnode$, $record$)
+\State return classify($nextnode$, $example$)
 \end{algorithmic}
 \end{algorithm}
 
