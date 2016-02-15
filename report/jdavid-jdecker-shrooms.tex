@@ -15,6 +15,7 @@
 \usepackage{amsmath}
 \usepackage{algpseudocode}
 \usepackage{algorithm}
+%%\usepackage{appendix}
 
 
 \hypersetup{hidelinks}
@@ -67,7 +68,6 @@ allows for fast classification.
 %Here is \parencite{wada2012incremental} just for kicks.
 
 \section{Design and Implementation}
-\section{sectiondesign}
 As per the project instructions our Decision Tree is modeled as the
 ID3 algorithm. In an effort to maintain good software engineering
 practices, we also chose to use object oriented programming
@@ -300,31 +300,183 @@ From the two attribute-selection criteria and four confidence
 intervals eight decision trees are built and evaluated.
 
 \subsection{Results}
-Talk about how the data set we were given worked out for us, it worked
-very well.
+All models performed equally well over the test and validation
+sets. In addition,  it was a surprise that no trees were pruned. The
+table below shows the confusion matrix shared by all 8 models.
+
+\begin{table}[ht]
+  \caption{Confusion Matrix}
+  \centering
+  \begin{tabular}{c c c }
+  \hline\hline
+                & Predicted num(p) & Predicted num(e) \\ [0.5ex]
+  %heading
+  \hline
+  Actual num(p) &              985 &                0 \\
+  Actual num(e) &                0 &             1048 \\ [1ex]
+  \hline
+  \end{tabular}
+  \label{table:nonlin}
+\end{table}
+
+A confusion matrix is more descriptive of a model's performance than
+accuracy. A confusion matrix shows the number of true positives (TP), true
+negatives (TN), false positives (FP), and false negatives (FN). From this accuracy
+and misclassification can be calculated. Accuracy is (TP+TN/p+e) and
+Misclassification is 1.0-Accuracy.
+
+In contrast, when evaluating the model over a validation set the label
+is not given. The only information provided is accuracy. The table
+below shows the classification accuracy of each model over the
+validation set.
+
+\begin{table}[ht]
+  \caption{Classification Accuracy}
+  \centering
+  \begin{tabular}{c c c c c}
+  \hline\hline
+  Criteria & $\alpha$=0.01 & $\alpha=0.05$ & $\alpha=0.50$ & $\alpha$=0.0 \\ [0.5ex]
+  %heading
+  \hline
+  information-gain & 99.95\% & 99.95\% & 99.95\% & 99.95\% \\
+  misclass-error   & 99.95\% & 99.95\% & 99.95\% & 99.95\% \\ [1ex]
+  \hline
+  \end{tabular}
+  \label{table:nonlin}
+\end{table}
+
+Although the trees built using the information-gain criteria performed
+equally as well as the trees built using the misclassification-error
+criteria, the two trees are slightly different. The trees built using
+the information-gain criteria contained only 38 nodes with a max depth
+of 4, whereas the trees built using the misclassification-error
+criteria contained 45 nodes with a max depth of 5. Even though the two
+types of trees performed equally well, the simpler tree with fewer
+nodes and smaller depth is the preferred model.
 
 \section{Discussion}
 \subsection{Explanation of Results}
-Explain which options work well and why.
-I'm not sure if there's really anything to say here since running it
-for any configuration yields basically the same results.
+All eight trees produced from information-gain criteria,
+misclassification-error criteria, $\alpha$=0.01, $\alpha$=0.05, $\alpha$=0.50,
+$\alpha$=0.0 perform equally well. It is surprising but this may be because
+the dataset is well suited for decision tree learning. Decision tree
+learning is best suited to problems where instances are represented as
+attribute-value pairs, and the target function has discrete output
+values \parencite{mitchell1997machine}. These are characteristics
+found in the mushroom database.
 
-\subsection{Folklore Rules}
-Thinking odor is probably the most important thing to remember,
-possibly the only thing you should really care about? Would have to
-look at the tree closer to see how many things actually make it passed
-the odor check
+\subsection{Proposed Classification Rules}
+The Appendix contains the complete set of classification rules
+constructed from one of our decision trees (one built using the
+information-gain critiera and $\alpha$=0.01). 
+
+A subset of those rules that identify poisonous mushrooms is listed
+here: (1) if the mushroom smells creosote, musty, foul, pungent,
+fishy, or spicy, then it is poisonous; (2) if the mushroom has no
+scent and its spore-print-color is green, then it is poisonous; (3) if
+the mushroom has no odor, has a white spore-print-color, and its
+stalk-root has a club shape, then it is poisonous; (4) if the mushroom
+has no odor, has a white spore-print-color, and its gill-size is
+narrow, then it is poisonous; and finally (5) if the mushroom has no
+odor, has a white spore-print-color, a bulbous stalk-root, and a white
+cap, then it is poisonous. 
+
 
 \section{Conclusions}
 
 \printbibliography
 
+\newpage
+\appendix
+\section{ Classification Rules}
+These are the classification rules produced by a decision tree using
+information-gain criteria and $\alpha$=0.01. These rules are equivalent to
+the rules produced for other information-gain trees with $\alpha$=0.05,
+$\alpha$=0.50, and $\alpha$=0.0.
+
+\texttt{[R1] IF ((odor=c)), THEN p.}
+
+\texttt{[R2] IF ((odor=m)), THEN p.}
+
+\texttt{[R3] IF ((odor=l)), THEN e.}
+
+\texttt{[R4] IF ((odor=f)), THEN p.}
+
+\texttt{[R5] IF ((odor=p)), THEN p.}
+
+\texttt{[R6] IF ((odor=a)), THEN e.}
+
+\texttt{[R7] IF ((odor=y)), THEN p.}
+
+\texttt{[R8] IF ((odor=s)), THEN p.}
+
+\texttt{[R9] IF ((odor=n) AND (spore-print-color=h)), THEN e.}
+
+\texttt{[R10] IF ((odor=n) AND (spore-print-color=o)), THEN e.}
+
+\texttt{[R11] IF ((odor=n) AND (spore-print-color=r)), THEN p.}
+
+\texttt{[R12] IF ((odor=n) AND (spore-print-color=b)), THEN e.}
+
+\texttt{[R13] IF ((odor=n) AND (spore-print-color=w) AND
+  (stalk-root=c)), THEN p.}
+
+\texttt{[R14] IF ((odor=n) AND (spore-print-color=w) AND (stalk-root=?)
+  AND (gill-size=b)), THEN e.}
+
+\texttt{[R15] IF ((odor=n) AND (spore-print-color=w) AND (stalk-root=?)
+  AND (gill-size=n)), THEN p.}
+
+\texttt{[R16] IF ((odor=n) AND (spore-print-color=w) AND
+  (stalk-root=r)), THEN e.}
+
+\texttt{[R17] IF ((odor=n) AND (spore-print-color=w) AND (stalk-root=z)), THEN
+e.}
+
+\texttt{[R18] IF ((odor=n) AND (spore-print-color=w) AND (stalk-root=b) AND
+(cap-color=c)), THEN e.}
+
+\texttt{[R19] IF ((odor=n) AND (spore-print-color=w) AND (stalk-root=b) AND
+(cap-color=r)), THEN e.}
+
+\texttt{[R20] IF ((odor=n) AND (spore-print-color=w) AND (stalk-root=b) AND
+(cap-color=b)), THEN e.}
+
+\texttt{[R21] IF ((odor=n) AND (spore-print-color=w) AND (stalk-root=b) AND
+(cap-color=p)), THEN e.}
+
+\texttt{[R22] IF ((odor=n) AND (spore-print-color=w) AND (stalk-root=b) AND
+(cap-color=w)), THEN p.}
+
+\texttt{[R23] IF ((odor=n) AND (spore-print-color=w) AND (stalk-root=b) AND
+(cap-color=y)), THEN e.}
+
+\texttt{[R24] IF ((odor=n) AND (spore-print-color=w) AND (stalk-root=b) AND
+(cap-color=n)), THEN e.}
+
+\texttt{[R25] IF ((odor=n) AND (spore-print-color=w) AND (stalk-root=b) AND
+(cap-color=e)), THEN e.}
+
+\texttt{[R26] IF ((odor=n) AND (spore-print-color=w) AND (stalk-root=b) AND
+(cap-color=u)), THEN e.}
+
+\texttt{[R27] IF ((odor=n) AND (spore-print-color=w) AND (stalk-root=b) AND
+(cap-color=g)), THEN e.}
+
+\texttt{[R28] IF ((odor=n) AND (spore-print-color=w) AND (stalk-root=u)), THEN
+e.}
+
+\texttt{[R29] IF ((odor=n) AND (spore-print-color=w) AND (stalk-root=e)), THEN
+e.}
+
+\texttt{[R30] IF ((odor=n) AND (spore-print-color=y)), THEN e.}
+
+\texttt{[R31] IF ((odor=n) AND (spore-print-color=n)), THEN e.}
+
+\texttt{[R32] IF ((odor=n) AND (spore-print-color=u)), THEN e.}
+
+\texttt{[R33] IF ((odor=n) AND (spore-print-color=k)), THEN e.}
+
+
+
 \end{document}
-
-
-
-
-
-
-
-
