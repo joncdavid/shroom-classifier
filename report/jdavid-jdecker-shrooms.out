@@ -1,0 +1,19 @@
+\BOOKMARK [1][-]{section.1}{Background on Decision Trees}{}% 1
+\BOOKMARK [1][-]{section.2}{Design and Implementation}{}% 2
+\BOOKMARK [1][-]{section.3}{sectiondesign}{}% 3
+\BOOKMARK [2][-]{subsection.3.1}{Data Structures}{section.3}% 4
+\BOOKMARK [2][-]{subsection.3.2}{Tree Building}{section.3}% 5
+\BOOKMARK [2][-]{subsection.3.3}{ID3 Algorithm}{section.3}% 6
+\BOOKMARK [2][-]{subsection.3.4}{Attribute Selection}{section.3}% 7
+\BOOKMARK [3][-]{subsubsection.3.4.1}{Selection via information gain}{subsection.3.4}% 8
+\BOOKMARK [3][-]{subsubsection.3.4.2}{Selection via misclassification error}{subsection.3.4}% 9
+\BOOKMARK [2][-]{subsection.3.5}{Overfitting and Branch Pruning}{section.3}% 10
+\BOOKMARK [2][-]{subsection.3.6}{Classification}{section.3}% 11
+\BOOKMARK [1][-]{section.4}{Experiments}{}% 12
+\BOOKMARK [2][-]{subsection.4.1}{Data}{section.4}% 13
+\BOOKMARK [2][-]{subsection.4.2}{Methods}{section.4}% 14
+\BOOKMARK [2][-]{subsection.4.3}{Results}{section.4}% 15
+\BOOKMARK [1][-]{section.5}{Discussion}{}% 16
+\BOOKMARK [2][-]{subsection.5.1}{Explanation of Results}{section.5}% 17
+\BOOKMARK [2][-]{subsection.5.2}{Folklore Rules}{section.5}% 18
+\BOOKMARK [1][-]{section.6}{Conclusions}{}% 19

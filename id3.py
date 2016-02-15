@@ -38,7 +38,7 @@ def id3(criteria, db, target_attr, attributes, defs,
         #    continue
         
         chi_squared = calc_chi_squared(A, defs, db)
-        dof = len(defs.attr_values[A])
+        dof = len(defs.attr_values[A]) - 1
         if CI != "0%" and should_prune(chi_squared, dof, CI, chi_table):
             label = mode2(db.records, target_attr)[0]
             return ID3Tree( ID3LeafNode(label))

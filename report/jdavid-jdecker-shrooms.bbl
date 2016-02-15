@@ -1,0 +1,77 @@
+% $ biblatex auxiliary file $
+% $ biblatex version 2.4 $
+% Do not modify the above lines!
+%
+% This is an auxiliary file used by the 'biblatex' package.
+% This file may safely be deleted. It will be recreated as
+% required.
+%
+\begingroup
+\makeatletter
+\@ifundefined{ver@biblatex.sty}
+  {\@latex@error
+     {Missing 'biblatex' package}
+     {The bibliography requires the 'biblatex' package.}
+      \aftergroup\endinput}
+  {}
+\endgroup
+
+\entry{mitchell1997machine}{misc}{}
+  \true{moreauthor}
+  \name{author}{1}{}{%
+    {{}%
+     {Mitchell}{M.}%
+     {Tom~M}{T.~M.}%
+     {}{}%
+     {}{}}%
+  }
+  \list{publisher}{1}{%
+    {McGraw-Hill Boston, MA:}%
+  }
+  \strng{namehash}{MTM+1}
+  \strng{fullhash}{MTM+1}
+  \field{title}{Machine learning. WCB}
+  \field{year}{1997}
+\endentry
+
+\entry{quinlan1986induction}{article}{}
+  \name{author}{1}{}{%
+    {{}%
+     {Quinlan}{Q.}%
+     {J.~Ross}{J.~R.}%
+     {}{}%
+     {}{}}%
+  }
+  \list{publisher}{1}{%
+    {Springer}%
+  }
+  \strng{namehash}{QJR1}
+  \strng{fullhash}{QJR1}
+  \field{number}{1}
+  \field{pages}{81\bibrangedash 106}
+  \field{title}{Induction of decision trees}
+  \field{volume}{1}
+  \field{journaltitle}{Machine learning}
+  \field{year}{1986}
+\endentry
+
+\entry{schlimmer1981mushroom}{article}{}
+  \name{author}{1}{}{%
+    {{}%
+     {Schlimmer}{S.}%
+     {Jeff}{J.}%
+     {}{}%
+     {}{}}%
+  }
+  \strng{namehash}{SJ1}
+  \strng{fullhash}{SJ1}
+  \field{title}{Mushroom records drawn from The Audubon Society field guide to
+  north American mushrooms}
+  \field{journaltitle}{GH Lincoff (Pres), New York}
+  \field{year}{1981}
+\endentry
+
+\lossort
+\endlossort
+
+\endinput

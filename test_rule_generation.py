@@ -35,7 +35,4 @@ tree.print_entire_tree()
 #pdb.set_trace()
 print("Printing generated rules.")
 rule_list = tree.generate_rules()
-i = 1
-for rule in rule_list:
-    print("[{}]".format(i) + str(rule))
-    i += 1
+tree.print_rules(rule_list)

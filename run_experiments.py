@@ -53,6 +53,8 @@ def test_experiment(criteria, validationfilename, CI, path):
     report = evaluator.evaluate(predicted_db, validation_db)
     report.print_confusion_matrix()
     report.print_summary()
+    tree.print_rules()
+    
 
 #---- begin ----
 expectedfile = None
