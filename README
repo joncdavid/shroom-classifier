@@ -13,7 +13,7 @@ Table of Contents
 + References
 
 
-
+===========================================================
 Description
 -----------------------------------------------------------
 This  project  builds  decision  tree  models that classify
@@ -23,39 +23,42 @@ Guide to  North American Mushrooms (1981).  It can be found
 in [3].
 
 
+===========================================================
 Instructions for use
 -----------------------------------------------------------
-To run any of the scripts below, verify their permissions.
-They should have the permission to execute. If permissions
-are set,
+Uncompress and untar
+
+  run: gunzip jdavid-jdecker-submit-me.tar.gz
+       tar xvf jdavid-jdecker-submit-me.tar
+
+Verify the following files are executable. If not then,
 
   run: chmod 755 run_experiments.py
        chmod 755 run_to_submit.sh
 
 
-To produce predictions over the validation dataset,
- and evaluations over the testing dataset:
+To run the project on validation and test sets:
 
   run: ./run_to_submit.sh
 
+
 This should generate files in the ./results/ directory:
 + ./results/validation/
-     prediction.gain.0%
-     prediction.gain.50%	
-     prediction.gain.95%
-     prediction.gain.99%	
-     prediction.misclassification.0%
-     prediction.misclassification.50%	
-     prediction.misclassification.95%
-     prediction.misclassification.99%
+     prediction.gain.0%                 (grade me, TA!)
+     prediction.gain.50%                (grade me, TA!)
+     prediction.gain.95%                (grade me, TA!)
+     prediction.gain.99%                (grade me, TA!)
+     prediction.misclassification.0%    (grade me, TA!)
+     prediction.misclassification.50%   (grade me, TA!)
+     prediction.misclassification.95%   (grade me, TA!)
+     prediction.misclassification.99%   (grade me, TA!)
      
 These files above are predictions on the validation set using
 different trees.
 
-
 It should also generate a file in the ./test/ directory:
 + ./results/test/
-     report.txt
+     report.txt                         (grade me, TA!)
      
 report.txt is a report that prints out each tree's evaluation on the
 testing set. And _for_each_tree_ it prints out its'
@@ -64,13 +67,16 @@ and equivalent rule set.
 
 
 
-
+===========================================================
 File manifest
 -----------------------------------------------------------
 Data files in ./data/
  + training.dat
  + testing.dat
  + validation.dat
+
+Report file in ./report
+ + jdavid-jdecker-shrooms.pdf
 
 Resulting output files in ./results/validation/ and ./results/test/
  + Files in ./results/validation/
@@ -114,6 +120,7 @@ Test files beginning with test_*
 
 
 
+===========================================================
 References
 -----------------------------------------------------------
 [1] T. M. Mitchell et al., Machine learning. wcb, 1997.
@@ -122,3 +129,4 @@ References
 [3] J. Schlimmer, “Mushroom records drawn from the
      audubon society field guide to north american mush-
      rooms,” GH Lincoff (Pres), New York, 1981.
+
