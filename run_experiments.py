@@ -49,11 +49,11 @@ def test_experiment(criteria, validationfilename, CI, path):
     predicted_db.save_class_only(savefile)
     print("\nSaved predicted data to file: {}".format(savefile))
 
-    tree.print_summary()
+    #tree.print_summary()
     report = evaluator.evaluate(predicted_db, validation_db)
     report.print_confusion_matrix()
     report.print_summary()
-    tree.print_rules()
+    #tree.print_rules()
     
 
 #---- begin ----

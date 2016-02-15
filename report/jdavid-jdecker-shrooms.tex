@@ -253,8 +253,8 @@ information gain algorithm is defined in algorithm 2.
 
 \subsubsection{Attribute selection via misclassification error}
 Attribute selection via misclassification error criteria is a more
-na{\"i}ve method. But it's easier to calculate. We define the
-misclassification error as follows:
+na{\"i}ve method. But it's easier to calculate. As discussed in the
+forums We define the misclassification error as follows:
 
 \begin{equation}
 \label{misclassification-error-equation}
@@ -307,6 +307,11 @@ Where,
 \label{chi-square-helper-equation}
 p'_i = p \times \frac{p_i+e_i}{p+e}
 \end{equation}
+
+In the equations above, $p$ and $e$ are the number of poisonous and
+edible classes in the dataset before the split, and $p'_i$ and $e'_i$
+are the number of poisonous and edible classesin the subset dataset
+after the split. 
 
 When the calculated $\chi^2$ value is greater than the value provided by
 the $\chi^2$ distribution table, continue splitting the tree. Otherwise,
