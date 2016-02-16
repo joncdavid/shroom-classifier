@@ -8,6 +8,7 @@
 %% Package algpseudocode and algorithm need to be installed. Try:
 %%   sudo apt-get install texlive-science
 
+
 \documentclass{IEEEtran}
 
 \usepackage[style=ieee,backend=bibtex]{biblatex}
@@ -62,22 +63,23 @@ all produce 99\% accuracy on the validation set.
 Machine learning is an approach to problem solving that involves
 training a model on a large set of examples to extract generalized
 knowledge and to make predictions on new examples. It requires a
-well-specified task, a measure of performance, and a training
+well-specified task, a measure of performance, and plenty of training
 examples \parencite{mitchell1997machine}.
 
 The classification of poisonous and edible mushrooms is a
-well-specified task. It's measure of performance is the accuracy of
-its predictions. And a large dataset of 8124 total mushroom instances is
-available, 4062 of which is allocated as training examples. This means that
-a machine learning approach is a viable option to solving the task of
-classifying poisonous and edible mushrooms. Decision trees in
-particular are suitable for this task \parencite{mitchell1997machine}
-because  data is represented as attribute-value pairs and, the target
-function's range is a set of categorical values.
+well-specified task. Its measure of performance is the accuracy of
+its predictions. A large dataset of 8124 mushroom instances is
+available. Of those 8124 instances 4062 are allocated as training
+examples. This means that a machine learning approach is a viable
+option to solving the task of classifying poisonous and edible
+mushrooms. Decision trees in particular are suitable for this
+task \parencite{mitchell1997machine} because  data is represented as
+attribute-value pairs and, the target function's range is a set of
+categorical values. 
 
 One of the main advantages of using decision trees is their reasoning
 mechanism is easy to understand. When a decision tree classifies an
-instance its reasoning mechanism can be traced back from the leaf node
+instance, its reasoning mechanism can be traced back from the leaf node
 to the root.
 
 Another advantage decision trees have is their structure. Their tree
@@ -86,17 +88,11 @@ where $v$ is the maximum number of valid values for any given attribute.
 
 
 \section{Design and Implementation}
-As per the project instructions our Decision Tree is modeled as the
-ID3 algorithm. In an effort to maintain good software engineering
-practices, we also chose to use object oriented programming
-methodologies when coding our Decision Tree. Our first challenge was
-getting the data in a structure that we could manage and
-manipulate. We then started defining our main classes for the tree. We
-implemented both entropy and misclassification error for our
-information gain metrics. After we had information gain we could then
-construct the tree. Pruning via chi square calculations was the next
-mechanic needed. We then were able to create our classification
-functionality.
+A custom implemented ID3 algorithm and its supporting data structures
+build a decision tree model to classify poisonous and edible
+mushrooms. To maintain good software engineering practices, object
+oriented programming methodologies are followed.
+
 
 \subsection{Data Structures}
 The ShroomDefs class abstracts the definition of a mushroom
@@ -107,11 +103,11 @@ at runtime, or to define a new set of attribute and valid values
 simply by defining a new file. 
 
 The ShroomRecord and ShroomDatabase classes abstract the dataset and
-provide functions to access data without having to understand its
+provide  functions to access data without having to understand its
 underlying implementation. For example, the database class provides
-functions to access an attribute columns which make it
-easier to calculate entropy because the task of extracting those
-values has already been taken care of.
+functions to access attribute columns. This makes it easier to
+calculate entropy, because the task of extracting those values has
+already been taken care of. 
 
 The ID3Tree is composed of ID3Nodes and ID3Edges. The connectivity
 between nodes and edges is defined by an adjacency matrix. The
@@ -129,12 +125,12 @@ ID3Tree also abstracts the mechanism of classifying instances.
 
 
 \subsection{ID3 Algorithm}
-The algorithm generates an ID3Tree. It first checks for homogeneity
+This algorithm generates an ID3Tree. It first checks for homogeneity
 among the dataset's class values. If the dataset's class values are
 pure, (i.e., homogeneous), ID3 returns a new subtree with a single
 ID3LeafNode that classifies that dataset.
 
-If the dataset is not homogeneous but the set of attributes is empty,
+If the dataset is not homogeneous, but the set of attributes is empty,
 that means there are no more attributes to split off of. ID3 returns a
 new subtree with a single ID3LeafNode that classifies the majority of
 the classes in the dataset.
@@ -441,7 +437,7 @@ nodes and smaller depth is the preferred model.
 \subsection{Explanation of Results}
 All eight trees produced from information-gain criteria,
 misclassification-error criteria, $\alpha$=0.01, $\alpha$=0.05, $\alpha$=0.50,
-$\alpha$=0.0 perform equally well. It is surprising but this may be because
+$\alpha$=0.0 perform equally well. It is surprising, but this may be because
 the dataset is well suited for decision tree learning. Decision tree
 learning is best suited to problems where instances are represented as
 attribute-value pairs, and the target function has discrete output
@@ -471,7 +467,7 @@ that the classification of poisonous and edible mushrooms is an easy
 task. However, the consumption of an incorrectly identified edible
 mushroom can be fatal. It is important to remember that models are
 representations of the things they are modeling and that no model is
-ever 100\% complete. 
+ever 100\% accurate. 
 
 \printbibliography
 
